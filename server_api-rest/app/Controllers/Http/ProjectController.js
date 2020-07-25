@@ -2,6 +2,8 @@
 
 const Project = use('App/Models/Project')
 
+const AuthorizationService = use('App/Services/AuthorizationService')
+
 class ProjectController {
   async index ({ auth, response }) {
     try {
@@ -28,6 +30,36 @@ class ProjectController {
     })
     await user.projects().save(project)
 
+    return project
+  }
+
+  async destroy ({ auth, params }) {
+    const user = await auth.getUser()
+    const { id } = params
+
+    const project = await Project.find(id)
+
+    // Controlando desde un servicio o helper
+    // ----------------------------------------------------
+    AuthorizationService.verifyPermission(project, user)
+
+    await project.delete()
+
+    console.log(`Se eliminó el proyecto [${project.id}]:`, project.name)
+    return project
+  }
+
+  async update ({ auth, params, request }) {
+    const user = await auth.getUser()
+    const { id } = params
+
+    const project = await Project.find(id)
+    AuthorizationService.verifyPermission(project, user)
+
+    project.merge(request.only('name'))
+    await project.save()
+
+    console.log(`Se actualizó el proyecto [${project.id}]:`, project.name)
     return project
   }
 }
