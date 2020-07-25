@@ -16,6 +16,22 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+// -------------------------------------------------------------------------------
+
+// Probando...
+
+// Route.get('/', () => {
+//   return { greeting: 'Hello world in JSON' }
+// })
+
+// Route.post('api/users/register', () => {
+//     return { message: 'Se registró un nuevo USARIO en la API-REST' }
+// })
+
+// -------------------------------------------------------------------------------
+
+Route.group(() => {
+  Route.post('register', 'UserController.store')
+  // Route.post('register-and-authenticate', 'UserController.storeAndLogin')
+  // Route.post('login', 'UserController.login')
+}).prefix('api/users/')
