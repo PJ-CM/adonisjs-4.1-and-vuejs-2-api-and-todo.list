@@ -35,3 +35,14 @@ Route.group(() => {
   // Route.post('register-and-authenticate', 'UserController.storeAndLogin')
   Route.post('login', 'UserController.login')
 }).prefix('api/users/')
+
+Route.group(() => {
+  Route.get('', 'ProjectController.index')
+  Route.post('store', 'ProjectController.store')
+  //Route.delete('delete/:id', 'ProjectController.destroy')
+  //Route.patch('update/:id', 'ProjectController.update')
+
+  //Route.get(':id/tasks', 'TaskController.index')
+  //Route.post(':id/tasks/store', 'TaskController.store')
+}).prefix('api/projects/')
+  .middleware('auth')
