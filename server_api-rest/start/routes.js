@@ -42,7 +42,12 @@ Route.group(() => {
   Route.delete('delete/:id', 'ProjectController.destroy')
   Route.patch('update/:id', 'ProjectController.update')
 
-  //Route.get(':id/tasks', 'TaskController.index')
-  //Route.post(':id/tasks/store', 'TaskController.store')
+  Route.get(':id/tasks', 'TaskController.index')
+  Route.post(':id/tasks/store', 'TaskController.store')
 }).prefix('api/projects/')
   .middleware('auth')
+
+Route.group(() => {
+  Route.delete('delete/:id', 'TaskController.destroy')
+  Route.patch('update/:id', 'TaskController.update')
+}).prefix('api/tasks/').middleware('auth')
