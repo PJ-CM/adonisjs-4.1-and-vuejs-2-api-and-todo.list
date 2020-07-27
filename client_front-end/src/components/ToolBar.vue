@@ -5,7 +5,7 @@
 
     <v-toolbar-title>VUE TODO</v-toolbar-title>
     <v-toolbar-items>
-      <v-btn>
+      <v-btn v-if="isLoggedIn">
         <v-icon>playlist_add_check</v-icon>
         Proyectos
       </v-btn>
@@ -14,15 +14,15 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn to="/register">
+      <v-btn to="/register" v-if="!isLoggedIn">
         <v-icon>account_box</v-icon>
         Registrarse
       </v-btn>
-      <v-btn>
+      <v-btn v-if="!isLoggedIn">
         <v-icon>fingerprint</v-icon>
         Iniciar Sesión
       </v-btn>
-      <v-btn>
+      <v-btn v-if="isLoggedIn">
         <v-icon>exit_to_app</v-icon>
         Cerrar Sesión
       </v-btn>
@@ -35,8 +35,15 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
-  name: 'ToolBar'
+  name: 'ToolBar',
+  computed: {
+    ...mapGetters('authentication', [
+      'isLoggedIn'
+    ])
+  }
 }
 </script>
 

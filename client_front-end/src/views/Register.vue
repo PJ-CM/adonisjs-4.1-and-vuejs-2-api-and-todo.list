@@ -18,6 +18,11 @@
           @input="setRegisterPassword"
           autocomplete="false"
         ></v-text-field>
+
+        <v-alert type="error" :value="registerError">
+          {{ registerError }}
+        </v-alert>
+
         <v-btn color="green" dark @click="register">
           <v-icon>account_box</v-icon>
           Registrarse
@@ -34,7 +39,8 @@ export default {
   computed: {
     ...mapState('authentication', [
       'registerEmail',
-      'registerPassword'
+      'registerPassword',
+      'registerError'
     ])
   },
   methods: {
