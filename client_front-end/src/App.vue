@@ -1,12 +1,28 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <v-app>
+    <ToolBar/>
+    <div id="app">
+
+      <div id="nav">
+        <router-link to="/">Home</router-link> |
+        <router-link to="/about">About</router-link>
+      </div>
+      <router-view/>
     </div>
-    <router-view/>
-  </div>
+  </v-app>
 </template>
+
+<script>
+// @ is an alias to /src
+import ToolBar from '@/components/ToolBar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    ToolBar
+  }
+}
+</script>
 
 <style lang="scss">
 #app {

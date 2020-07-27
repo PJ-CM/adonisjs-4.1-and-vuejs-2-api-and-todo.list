@@ -14,6 +14,7 @@ Vue.use(Vuetify)
 sync(store, router)
 
 new Vue({
+  vuetify: new Vuetify(),
   router,
   store,
   render: h => h(App)
