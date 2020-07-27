@@ -2,6 +2,7 @@
 
 const ForbiddenAccessException = use('App/Exceptions/ForbiddenAccessException')
 const NotFoundResourceException = use('App/Exceptions/NotFoundResourceException')
+const NotAllowException = use('App/Exceptions/NotAllowException')
 
 class AuthorizationService {
   verifyPermission (resource, user) {
@@ -17,6 +18,14 @@ class AuthorizationService {
       // Lanzando una Excepción PERSONALIZADA
       // --------------------------------------------
       throw new ForbiddenAccessException()
+    }
+  }
+
+  verifyIfAllow (id, user, msgError) {
+    console.log(id, user.id)
+    if (id !== user.id) {
+      console.log('Antes de lanzar la EXCEPTION:', id, user.id)
+      throw new NotAllowException(msgError)
     }
   }
 }

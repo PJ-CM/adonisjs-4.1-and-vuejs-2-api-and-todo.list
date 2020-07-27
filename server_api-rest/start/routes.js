@@ -31,9 +31,11 @@ const Route = use('Route')
 // -------------------------------------------------------------------------------
 
 Route.group(() => {
+  Route.get('', 'UserController.index')
   Route.post('register', 'UserController.store')
   // Route.post('register-and-authenticate', 'UserController.storeAndLogin')
   Route.post('login', 'UserController.login')
+  Route.delete('delete/:id', 'UserController.destroy')
 }).prefix('api/users/')
 
 Route.group(() => {

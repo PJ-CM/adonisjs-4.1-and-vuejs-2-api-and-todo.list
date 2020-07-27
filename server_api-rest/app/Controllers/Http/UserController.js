@@ -2,7 +2,13 @@
 
 const User = use('App/Models/User')
 
+const AuthorizationService = use('App/Services/AuthorizationService')
+
 class UserController {
+  async index () {
+    return User.all()
+  }
+
   // -> Probando...
   // store() {
   //     //Lógica para guardar los datos del nuevo usuario...
@@ -63,6 +69,23 @@ class UserController {
 
     const token = await auth.attempt(email, password)
     return token
+  }
+
+  async destroy ({ auth, params }) {
+    const user = await auth.getUser()
+    const { id } = params
+
+    // Controlando desde un servicio o helper
+    // ----------------------------------------------------
+    const messageError = ':: No tiene permitido eliminar esta cuenta ::'
+    // Cuando se recibe el parámetro, el dato es de tipo String, por ello,
+    // para que sea considerado como Number, hay que pasarlo a ese tipo de dato
+    AuthorizationService.verifyIfAllow(Number(id), user, messageError)
+
+    await user.delete()
+
+    console.log(`Se eliminó el usuario [${user.id}]:`, user.username)
+    return user
   }
 }
 
