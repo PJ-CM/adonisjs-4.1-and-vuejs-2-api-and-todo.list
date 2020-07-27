@@ -14,7 +14,7 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn>
+      <v-btn to="/register">
         <v-icon>account_box</v-icon>
         Registrarse
       </v-btn>

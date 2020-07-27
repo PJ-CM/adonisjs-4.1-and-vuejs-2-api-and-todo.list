@@ -2,7 +2,6 @@
   <v-app>
     <ToolBar/>
     <div id="app">
-
       <div id="nav">
         <router-link to="/">Home</router-link> |
         <router-link to="/about">About</router-link>
@@ -34,6 +33,7 @@ export default {
 }
 
 #nav {
+  margin-top: 4rem;
   padding: 30px;
 
   a {
