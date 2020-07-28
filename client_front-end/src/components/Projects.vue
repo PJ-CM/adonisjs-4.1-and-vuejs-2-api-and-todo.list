@@ -1,10 +1,11 @@
 <template>
   <Panel title="Proyectos">
-    <v-layout row wrap>
+    <v-layout row wrap class="mx-1">
       <v-flex xs8>
         <v-text-field
           placeholder="Nombre del nuevo proyecto..."
           :value="newProjectName"
+          @keyup.enter="create"
           @input="setNewProjectName"
         ></v-text-field>
       </v-flex>
@@ -25,12 +26,42 @@
     </v-layout>
 
     <div
+      class="mx-1"
       v-if="projects.length == 0">
       :: Ningún proyecto creado por el momento ::
     </div>
     <div
+      class="project mx-2 mt-2 mb-2"
       v-for="project in projects" :key="project.id">
-      {{ project.name }}
+      <v-layout row wrap>
+        <v-flex xs9 class="text-left">
+          <span
+            v-if="!project.inEditingMode">
+            {{ project.name }}
+          </span>
+          <v-text-field
+            autofocus
+            v-if="project.inEditingMode"
+            :value="project.name"
+            @keyup.enter="applyChange(project)"
+            @input="setProjectName({
+              project,
+              name: $event
+            })"
+          ></v-text-field>
+        </v-flex>
+
+        <v-flex xs3 class="text-right">
+          <v-icon
+            v-if="!project.inEditingMode"
+            @click="setEditingMode(project)" title="Editar">edit</v-icon>
+          <v-icon
+            v-if="project.inEditingMode"
+            @click="applyChange(project)" title="Validar">check</v-icon>
+          <v-icon
+            @click="deleteRegister(project)" title="Eliminar">delete</v-icon>
+        </v-flex>
+      </v-layout>
     </div>
   </Panel>
 </template>
@@ -52,16 +83,23 @@ export default {
   },
   methods: {
     ...mapMutations('projects', [
-      'setNewProjectName'
+      'setNewProjectName',
+      'setProjectName',
+      'setEditingMode'
     ]),
     ...mapActions('projects', [
       'create',
-      'fetch'
+      'fetch',
+      'applyChange',
+      'deleteRegister'
     ])
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss">
+<style lang="scss">
+.project {
+  font-size: 1rem;
+}
 </style>

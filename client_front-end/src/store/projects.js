@@ -1,3 +1,5 @@
+import Vue from 'vue'
+
 // import router from '../router'
 import HTTP from '../http'
 
@@ -31,6 +33,18 @@ export default {
         .catch(() => {
           commit('setNewProjectError', 'Ocurrió cierto ERROR al querer crear el nuevo proyecto')
         })
+    },
+    applyChange ({ commit }, project) {
+      return HTTP().patch(`projects/update/${project.id}`, project)
+        .then(() => {
+          commit('unsetEditingMode', project)
+        })
+    },
+    deleteRegister ({ commit }, project) {
+      return HTTP().delete(`projects/delete/${project.id}`)
+        .then(() => {
+          commit('removeProjectFromList', project)
+        })
     }
   },
   getters: {
@@ -50,6 +64,22 @@ export default {
     },
     setProjects (state, projects) {
       state.projects = projects
+    },
+    setProjectName (state, { project, name }) {
+      project.name = name
+    },
+    setEditingMode (state, project) {
+      // Esto no llega a estar permitido parece ser, debido a que no es un campo del registro
+      // project.inEditingMode = true
+      Vue.set(project, 'inEditingMode', true)
+    },
+    unsetEditingMode (state, project) {
+      // Esto no llega a estar permitido parece ser, debido a que no es un campo del registro
+      // project.inEditingMode = false
+      Vue.set(project, 'inEditingMode', false)
+    },
+    removeProjectFromList (state, project) {
+      state.projects.splice(state.projects.indexOf(project), 1)
     }
   }
 }

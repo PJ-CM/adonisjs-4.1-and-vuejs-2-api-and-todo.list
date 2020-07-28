@@ -53,6 +53,7 @@
               dark
               v-bind="attrs"
               v-on="on"
+              title="Menú de Usuario"
             >
               <v-icon>account_circle</v-icon>
             </v-btn>
