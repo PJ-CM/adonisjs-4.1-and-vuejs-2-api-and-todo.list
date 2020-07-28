@@ -5,7 +5,11 @@
 
     <v-toolbar-title>VUE TODO</v-toolbar-title>
     <v-toolbar-items>
-      <v-btn v-if="isLoggedIn">
+      <v-btn to="/">
+        <v-icon>home</v-icon>
+        Home
+      </v-btn>
+      <v-btn to="/projects" v-if="isLoggedIn">
         <v-icon>playlist_add_check</v-icon>
         Proyectos
       </v-btn>
