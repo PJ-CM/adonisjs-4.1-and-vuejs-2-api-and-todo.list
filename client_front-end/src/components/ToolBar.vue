@@ -18,11 +18,15 @@
         <v-icon>account_box</v-icon>
         Registrarse
       </v-btn>
-      <v-btn v-if="!isLoggedIn">
+      <v-btn to="/login" v-if="!isLoggedIn">
         <v-icon>fingerprint</v-icon>
         Iniciar Sesión
       </v-btn>
-      <v-btn v-if="isLoggedIn">
+      <!-- <v-btn v-if="isLoggedIn" @click="setToken(null)">
+        <v-icon>exit_to_app</v-icon>
+        Cerrar Sesión
+      </v-btn> -->
+      <v-btn v-if="isLoggedIn" @click="logOut">
         <v-icon>exit_to_app</v-icon>
         Cerrar Sesión
       </v-btn>
@@ -35,13 +39,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+// import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ToolBar',
   computed: {
     ...mapGetters('authentication', [
       'isLoggedIn'
+    ])
+  },
+  methods: {
+    // ...mapMutations('authentication', [
+    //   'setToken'
+    // ]),
+    ...mapActions('authentication', [
+      'logOut'
     ])
   }
 }
@@ -64,9 +77,10 @@ export default {
     height: 100% !important;
     border-radius: 0;
 
-    .v-icon {
-      margin-right: .11rem;
-    }
+    // Pasó al STYLE de la App para ser más general...
+    // .v-icon {
+    //   margin-right: .11rem;
+    // }
   }
 }
 </style>

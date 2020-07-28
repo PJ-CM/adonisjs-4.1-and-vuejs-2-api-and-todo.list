@@ -45,4 +45,10 @@ export default {
     }
   }
 }
+
+.v-btn {
+  .v-icon {
+    margin-right: .11rem;
+  }
+}
 </style>
