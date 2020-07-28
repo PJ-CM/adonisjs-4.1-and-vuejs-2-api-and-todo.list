@@ -4,10 +4,11 @@ import HTTP from '../http'
 export default {
   namespaced: true,
   state: {
+    token: null,
+    userEmail: null,
     registerEmail: null,
     registerPassword: null,
     registerError: null,
-    token: null,
     loginEmail: null,
     loginPassword: null,
     loginError: null
@@ -29,9 +30,10 @@ export default {
       })
         .then(({ data }) => {
           commit('setToken', data.token)
+          commit('setUserEmail', state.registerEmail)
           commit('setRegisterEmail', null)
           commit('setRegisterPassword', null)
-          router.push('/')
+          router.push('/projects')
         })
         .catch(() => {
           commit('setRegisterError', 'Ocurrió cierto ERROR al querer registrar la nueva cuenta de usuario')
@@ -46,9 +48,10 @@ export default {
       })
         .then(({ data }) => {
           commit('setToken', data.token)
+          commit('setUserEmail', state.loginEmail)
           commit('setLoginEmail', null)
           commit('setLoginPassword', null)
-          router.push('/')
+          router.push('/projects')
         })
         .catch(() => {
           commit('setLoginError', 'Ocurrió cierto ERROR al querer iniciar sesión de usuario')
@@ -56,6 +59,7 @@ export default {
     },
     logOut ({ commit }) {
       commit('setToken', null)
+      commit('setUserEmail', null)
       router.push('/login')
     }
   },
@@ -67,6 +71,9 @@ export default {
   mutations: {
     setToken (state, token) {
       state.token = token
+    },
+    setUserEmail (state, userEmail) {
+      state.userEmail = userEmail
     },
     setRegisterError (state, error) {
       state.registerError = error

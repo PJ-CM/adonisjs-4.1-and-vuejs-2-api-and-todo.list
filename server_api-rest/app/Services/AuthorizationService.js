@@ -22,9 +22,9 @@ class AuthorizationService {
   }
 
   verifyIfAllow (id, user, msgError) {
-    console.log(id, user.id)
+    // console.log(id, user.id)
     if (id !== user.id) {
-      console.log('Antes de lanzar la EXCEPTION:', id, user.id)
+      // console.log('Antes de lanzar la EXCEPTION:', id, user.id)
       throw new NotAllowException(msgError)
     }
   }

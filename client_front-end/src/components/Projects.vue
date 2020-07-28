@@ -25,6 +25,10 @@
     </v-layout>
 
     <div
+      v-if="projects.length == 0">
+      :: Ningún proyecto creado por el momento ::
+    </div>
+    <div
       v-for="project in projects" :key="project.id">
       {{ project.name }}
     </div>
@@ -36,6 +40,9 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
   name: 'Projects',
+  mounted () {
+    this.fetch()
+  },
   computed: {
     ...mapState('projects', [
       'newProjectName',
@@ -48,7 +55,8 @@ export default {
       'setNewProjectName'
     ]),
     ...mapActions('projects', [
-      'create'
+      'create',
+      'fetch'
     ])
   }
 }
