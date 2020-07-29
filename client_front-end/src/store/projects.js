@@ -21,7 +21,7 @@ export default {
           commit('setFetchProjectsError', 'Ocurrió cierto ERROR al querer recuperar la lista de proyectos del usuario')
         })
     },
-    create ({ commit, state }) {
+    createProject ({ commit, state }) {
       commit('setNewProjectError', null)
       return HTTP().post('/projects/store', {
         name: state.newProjectName
