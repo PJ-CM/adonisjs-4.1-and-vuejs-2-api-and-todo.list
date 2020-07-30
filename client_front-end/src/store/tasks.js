@@ -37,9 +37,10 @@ export default {
           dispatch('resetTasksPanel')
         })
     },
-    createTask ({ commit, state }, project) {
+    createTask ({ commit, state, rootState }) {
       commit('setNewTaskError', null)
-      return HTTP().post(`/projects/${project.id}/tasks/store`, {
+      // return HTTP().post(`/projects/${project.id}/tasks/store`, {
+      return HTTP().post(`/projects/${rootState.projects.currentProject.id}/tasks/store`, {
         description: state.newTaskName
       })
         .then(({ data }) => {
@@ -87,8 +88,8 @@ export default {
     setTasks (state, tasks) {
       state.tasks = tasks
     },
-    setTaskName (state, { task, name }) {
-      task.name = name
+    setTaskDescription (state, { task, description }) {
+      task.description = description
     },
     setDisableTaskCreatingMode (state, onOff) {
       state.disableTaskCreatingMode = onOff

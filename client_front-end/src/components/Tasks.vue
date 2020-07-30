@@ -21,9 +21,9 @@
         :inEditingMode="task.inEditingMode"
         :editingModeDisabled="task.editingModeDisabled"
         :name="task.description"
-        @onInput="setTaskName({
+        @onInput="setTaskDescription({
           task,
-          name: $event
+          description: $event
         })"
         @onEdit="setEditingMode(task)"
         @onSave="applyChange(task)"
@@ -80,7 +80,7 @@ export default {
     // },
     ...mapMutations('tasks', [
       'setNewTaskName',
-      'setTaskName',
+      'setTaskDescription',
       'setEditingMode',
       'setTasksPanelTitle'
     ]),
