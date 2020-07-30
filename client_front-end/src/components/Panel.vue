@@ -2,7 +2,6 @@
   <div class="white elevation-2">
     <v-toolbar
       flat dense dark
-      color="green"
     >
       <v-toolbar-title>
         {{ title }}
@@ -26,4 +25,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+//En vez de establecer el BG-Color con las propiedades CSS del Vuetify...
+.v-toolbar {
+  // background-color: cadetblue !important;
+  background-color: var(--color-prim) !important;
+}
 </style>

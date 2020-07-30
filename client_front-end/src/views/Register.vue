@@ -25,7 +25,7 @@
           {{ registerError }}
         </v-alert>
 
-        <v-btn color="green" dark @click="register">
+        <v-btn class="btn-action" dark @click="register">
           <v-icon>account_box</v-icon>
           Registrarse
         </v-btn>

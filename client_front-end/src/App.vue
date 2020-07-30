@@ -24,6 +24,15 @@ export default {
 </script>
 
 <style lang="scss">
+
+// Variables
+@import '@/assets/sass/_variables';
+
+// :root {
+//   --color-prim: cadetblue !important;
+//   --color-sec: #262626;
+// }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -50,5 +59,16 @@ export default {
   .v-icon {
     margin-right: .11rem;
   }
+}
+
+.btn-action {
+  background-color: var(--color-btn-action) !important;
+}
+.btn-action:hover {
+  background-color: var(--color-btn-action-hover) !important;
+}
+
+.icon-action:hover {
+  color: var(--color-btn-action-hover);
 }
 </style>

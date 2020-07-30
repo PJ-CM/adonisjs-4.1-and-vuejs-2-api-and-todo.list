@@ -27,12 +27,12 @@
           {{ loginError }}
         </v-alert>
 
-        <v-btn color="green" dark @click="login">
+        <v-btn class="btn-action" dark @click="login">
           <v-icon>login</v-icon>
           Iniciar Sesión
         </v-btn>
 
-        <v-btn class="ml-2" color="green" dark @click="resetLogin">
+        <v-btn class="ml-2" dark @click="resetLogin">
           <v-icon>settings_backup_restore</v-icon>
           Reset
         </v-btn>

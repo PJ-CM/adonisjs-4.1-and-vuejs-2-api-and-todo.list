@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo_adonisjs_vuejs.png">
+    <!-- <img alt="Vue logo" src="../assets/images/logo_adonisjs_vuejs.png"> -->
+    <!-- referido hacia "./src", es lo mismo "../" que "@/"  -->
+    <img alt="Vue logo" src="@/assets/images/logo_adonisjs_vuejs.png">
     <HelloWorld msg="Welcome to Your AdonisJS & Vue.js App"/>
   </div>
 </template>

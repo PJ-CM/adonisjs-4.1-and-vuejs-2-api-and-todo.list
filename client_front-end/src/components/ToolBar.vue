@@ -3,7 +3,8 @@
     <!-- Lo que sigue era el icono de Hamburguesa :: aunque salía con fallo, al incluir un $ -->
     <!-- <v-app-bar-nav-icon></v-app-bar-nav-icon> -->
 
-    <v-toolbar-title>VUE TODO</v-toolbar-title>
+    <img alt="Vue logo" src="@/assets/images/logo_adonisjs_vuejs.png" width="7%">
+    <v-toolbar-title>ToDo</v-toolbar-title>
     <v-toolbar-items>
       <v-btn to="/">
         <v-icon>home</v-icon>
@@ -172,8 +173,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+
 .v-toolbar {
-  background-color: green !important;
+  // background-color: cadetblue !important;
+  background-color: var(--color-prim) !important;
   position: fixed;
   width: 100%;
 
@@ -182,7 +185,7 @@ export default {
   }
 
   .v-btn {
-    background-color: green !important;
+    background-color: var(--color-prim) !important;
     box-shadow: none;
     height: 100% !important;
     border-radius: 0;

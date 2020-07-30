@@ -17,12 +17,15 @@
 
     <v-flex xs3 class="text-right">
       <v-icon
+        class="icon-action"
         v-if="!inEditingMode"
         @click="$emit('onEdit')" title="Editar" :disabled="editingModeDisabled">edit</v-icon>
       <v-icon
+        class="icon-action"
         v-if="inEditingMode"
         @click="$emit('onSave')" title="Validar">check</v-icon>
       <v-icon
+        class="icon-action"
         @click="$emit('onDelete')" title="Eliminar">delete</v-icon>
     </v-flex>
   </v-layout>
@@ -79,12 +82,14 @@ span.reg_txt:hover {
   cursor: pointer;
 }
 span.reg_txt:hover, .reg_selected {
-  background-color: greenyellow;
+  // background-color: greenyellow;
+  background-color: var(--color-reg_selected);
 }
 
-.v-icon:hover {
-  color: green;
-}
+// .v-icon:hover {
+//   color: green;
+// }
+
 // button:disabled {
 //   cursor: not-allowed;
 // }

@@ -17,8 +17,7 @@
     <v-flex xs4 class="text-right">
       <v-btn
         dark
-        class="mt-3"
-        color="green" @click="$emit('create')"
+        class="mt-3 btn-action" @click="$emit('create')"
         :disabled="disableRegisterCreatingMode">
         <v-icon class="mr-2">add_circle</v-icon>
         Crear
@@ -43,5 +42,12 @@ export default {
 // .mt-3.theme--dark.v-btn.v-btn--contained.v-btn--disabled.v-size--default, .v-text-field {
 //   cursor: not-allowed;
 //   background-color: blue;
+// }
+
+// .v-btn {
+//   background-color: var(--color-btn-action) !important;
+// }
+// .v-btn:hover {
+//   background-color: var(--color-btn-action-hover) !important;
 // }
 </style>
