@@ -1,6 +1,7 @@
 <template>
   <Panel title="Proyectos">
     <CreateRegister
+      :disableRegisterCreatingMode="false"
       placeholder="Nombre del nuevo proyecto..."
       :value="newProjectName"
       @onInput="setNewProjectName"
@@ -55,13 +56,26 @@ export default {
       'projects',
       'currentProject',
       'currentIdProjectSelected'
-    ])
+    ])//,
+    // ...mapState('tasks', [
+    //   'disableTaskCreatingMode'
+    // ])
   },
   methods: {
+    isPprojectClicked (project) {
+      return this.currentProject === project
+    },
     projectClicked (project) {
-      this.setCurrentProject(project)
-      this.setCurrentIdProjectSelected(project.id)
-      this.fetchProjectTasks(project)
+      if (this.isPprojectClicked(project)) {
+        this.setCurrentProject(null)
+        this.setCurrentIdProjectSelected(null)
+        this.resetTasksPanel()
+      } else {
+        this.setCurrentProject(project)
+        this.setCurrentIdProjectSelected(project.id)
+        this.fetchProjectTasks(project)
+        this.setDisableTaskCreatingMode(false)
+      }
     },
     ...mapMutations('projects', [
       'setNewProjectName',
@@ -70,6 +84,9 @@ export default {
       'setCurrentProject',
       'setCurrentIdProjectSelected'
     ]),
+    ...mapMutations('tasks', [
+      'setDisableTaskCreatingMode'
+    ]),
     ...mapActions('projects', [
       'createProject',
       'fetch',
@@ -77,7 +94,8 @@ export default {
       'deleteRegister'
     ]),
     ...mapActions('tasks', [
-      'fetchProjectTasks'
+      'fetchProjectTasks',
+      'resetTasksPanel'
     ])
   }
 }

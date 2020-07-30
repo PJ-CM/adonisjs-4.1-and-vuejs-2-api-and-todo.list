@@ -124,7 +124,7 @@
 
 <script>
 // import { mapGetters, mapMutations } from 'vuex'
-import { mapState, mapMutations, mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   data: () => ({
@@ -145,9 +145,11 @@ export default {
     ])
   },
   methods: {
-    ...mapMutations('projects', [
-      'setCurrentProject',
-      'setCurrentIdProjectSelected'
+    ...mapActions('projects', [
+      'resetProjectsPanel'
+    ]),
+    ...mapActions('tasks', [
+      'resetTasksPanel'
     ]),
     // ...mapMutations('authentication', [
     //   'setToken'
@@ -157,8 +159,8 @@ export default {
     ]),
     resetData () {
       this.menu = false
-      this.setCurrentProject(null)
-      this.setCurrentIdProjectSelected(null)
+      this.resetProjectsPanel()
+      this.resetTasksPanel()
     },
     closeMenuAndLogout () {
       this.resetData()

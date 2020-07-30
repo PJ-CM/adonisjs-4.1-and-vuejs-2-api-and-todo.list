@@ -15,6 +15,10 @@ export default {
     fetchProjectsError: null
   },
   actions: {
+    resetProjectsPanel ({ commit }) {
+      commit('setCurrentProject', null)
+      commit('setCurrentIdProjectSelected', null)
+    },
     fetch ({ commit }) {
       return HTTP().get('/projects')
         .then(({ data }) => {

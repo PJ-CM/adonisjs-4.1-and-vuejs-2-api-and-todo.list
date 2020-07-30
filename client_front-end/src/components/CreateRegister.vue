@@ -6,6 +6,7 @@
         :value="value"
         @input="$emit('onInput', $event)"
         @keyup.enter="$emit('create')"
+        :disabled="disableRegisterCreatingMode"
       ></v-text-field>
     </v-flex>
 
@@ -17,7 +18,8 @@
       <v-btn
         dark
         class="mt-3"
-        color="green" @click="$emit('create')">
+        color="green" @click="$emit('create')"
+        :disabled="disableRegisterCreatingMode">
         <v-icon class="mr-2">add_circle</v-icon>
         Crear
       </v-btn>
@@ -31,11 +33,15 @@ export default {
 
   props: [
     'placeholder',
-    'value'
+    'value',
+    'disableRegisterCreatingMode'
   ]
 }
 </script>
 
-<style lang="scss">
-
+<style scope lang="scss">
+// .mt-3.theme--dark.v-btn.v-btn--contained.v-btn--disabled.v-size--default, .v-text-field {
+//   cursor: not-allowed;
+//   background-color: blue;
+// }
 </style>

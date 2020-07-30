@@ -1,6 +1,7 @@
 <template>
   <Panel :title="tasksPanelTitle">
     <CreateRegister
+      :disableRegisterCreatingMode="disableTaskCreatingMode"
       placeholder="Nombre de la nueva tarea..."
       :value="newTaskName"
       @onInput="setNewTaskName"
@@ -10,7 +11,7 @@
     <div
       class="mx-1"
       v-if="tasks.length == 0">
-      :: Ningún proyecto creado por el momento ::
+      :: Ninguna tarea creada por el momento ::
     </div>
     <div
       class="task mx-2 mt-2 mb-2"
@@ -59,6 +60,7 @@ export default {
   },
   computed: {
     ...mapState('tasks', [
+      'disableTaskCreatingMode',
       'newTaskName',
       'newTaskError',
       'tasksPanelTitle',

@@ -39,11 +39,12 @@ export default {
     'editingModeDisabled',
     'idRegister',
     'name'
-  ],
+  ]//,
 
-  data: () => ({
-    idSelected: null
-  })//,
+  // OK
+  // data: () => ({
+  //   idSelected: null
+  // })//,
 
   // OK
   // mounted () {

@@ -11,18 +11,30 @@ export default {
     newTaskError: null,
     currentTaskEditing: null,
     fetchTasksError: null,
-    tasksPanelTitle: null
+    tasksPanelTitle: null,
+    disableTaskCreatingMode: true
   },
   actions: {
-    fetchProjectTasks ({ commit }, project) {
-      commit('setTasksPanelTitle', `Tareas ... relativas a ...${project.name}`)
-
+    resetTasksPanel ({ commit }) {
+      commit('setTasks', [])
+      commit('setTasksPanelTitle', 'Tareas')
+      commit('setDisableTaskCreatingMode', true)
+    },
+    setTasksPanel ({ commit }, payload) {
+      commit('setTasksPanelTitle', `Tareas ... relativas a ... ${payload.projectName}`)
+      commit('setTasks', payload.data)
+    },
+    fetchProjectTasks ({ dispatch, commit }, project) {
       return HTTP().get(`/projects/${project.id}/tasks`)
         .then(({ data }) => {
-          commit('setTasks', data)
+          dispatch('setTasksPanel', {
+            projectName: project.name,
+            data: data
+          })
         })
         .catch(() => {
           commit('setFetchTasksError', 'Ocurrió cierto ERROR al querer recuperar la lista de tareas del proyecto elegido')
+          dispatch('resetTasksPanel')
         })
     },
     createTask ({ commit, state }, project) {
@@ -77,6 +89,9 @@ export default {
     },
     setTaskName (state, { task, name }) {
       task.name = name
+    },
+    setDisableTaskCreatingMode (state, onOff) {
+      state.disableTaskCreatingMode = onOff
     },
     setEditingMode (state, task) {
       // Esto no llega a estar permitido parece ser, debido a que no es un campo del registro
