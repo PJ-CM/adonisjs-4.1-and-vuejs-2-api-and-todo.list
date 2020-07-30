@@ -9,6 +9,7 @@
           placeholder="Email"
           :value="loginEmail"
           @input="setLoginEmail"
+          @keyup.enter="login"
         ></v-text-field>
           <!-- v-model="form.email" -->
         <v-text-field
@@ -17,6 +18,7 @@
           type="password"
           :value="loginPassword"
           @input="setLoginPassword"
+          @keyup.enter="login"
           autocomplete="false"
         ></v-text-field>
           <!-- v-model="form.password" -->

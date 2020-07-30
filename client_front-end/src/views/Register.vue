@@ -9,6 +9,7 @@
           placeholder="Email"
           :value="registerEmail"
           @input="setRegisterEmail"
+          @keyup.enter="register"
         ></v-text-field>
         <v-text-field
           label="Password"
@@ -16,6 +17,7 @@
           type="password"
           :value="registerPassword"
           @input="setRegisterPassword"
+          @keyup.enter="register"
           autocomplete="false"
         ></v-text-field>
 
