@@ -86,7 +86,7 @@
 
             <v-divider></v-divider>
 
-            <v-btn class="green my-5" text dark @click="closeMenuAndLogout">
+            <v-btn class="btn-action my-5" text dark @click="closeMenuAndLogout">
               <v-icon>exit_to_app</v-icon>
               Cerrar Sesión
             </v-btn>

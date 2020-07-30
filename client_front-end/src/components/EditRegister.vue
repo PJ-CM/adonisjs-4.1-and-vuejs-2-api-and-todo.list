@@ -1,8 +1,15 @@
 <template>
   <v-layout row wrap>
     <v-flex xs9 class="text-left">
-      <span class="reg_txt" :class="{ 'reg_selected': (currentIdRegisterClicked === idRegister) }"
+      <slot></slot>
+      <!-- <span class="reg_txt" :class="{ 'reg_selected': (currentIdRegisterClicked === idRegister) }" -->
+      <span :class="{
+          'reg_txt': classRegisterHover,
+          'reg_selected': (currentIdRegisterClicked === idRegister),
+          'reg_text_struck_through': isCompletedCssTxt
+        }"
         @click="$emit('onClick')"
+        :title="(currentIdRegisterClicked === idRegister) ? 'Clic para deseleccionarlo' : 'Clic para elegirlo'"
         v-if="!inEditingMode">
         {{ name }}
       </span>
@@ -26,7 +33,7 @@
         @click="$emit('onSave')" title="Validar">check</v-icon>
       <v-icon
         class="icon-action"
-        @click="$emit('onDelete')" title="Eliminar">delete</v-icon>
+        @click="$emit('onDelete')" title="Eliminar" :disabled="!isCompletedBtnDel">delete</v-icon>
     </v-flex>
   </v-layout>
 </template>
@@ -34,14 +41,18 @@
 <script>
 export default {
   name: 'EditRegister',
+  css_fijo_hover: 'reg_txt',
 
   props: [
     // 'currentRegisterEditing',
     'currentIdRegisterClicked',
+    'classRegisterHover',
     'inEditingMode',
     'editingModeDisabled',
     'idRegister',
-    'name'
+    'name',
+    'isCompletedCssTxt',
+    'isCompletedBtnDel'
   ]//,
 
   // OK
@@ -84,6 +95,9 @@ span.reg_txt:hover {
 span.reg_txt:hover, .reg_selected {
   // background-color: greenyellow;
   background-color: var(--color-reg_selected);
+}
+span.reg_text_struck_through {
+  text-decoration: line-through;
 }
 
 // .v-icon:hover {

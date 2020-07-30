@@ -17,11 +17,14 @@
       class="project mx-2 mt-2 mb-2"
       v-for="project in projects" :key="project.id">
       <EditRegister
+        :classRegisterHover="classRegisterHover"
         :currentIdRegisterClicked="currentIdProjectSelected"
         :inEditingMode="project.inEditingMode"
         :editingModeDisabled="project.editingModeDisabled"
         :idRegister="project.id"
         :name="project.name"
+        :isCompletedCssTxt="false"
+        :isCompletedBtnDel="true"
         @onInput="setProjectName({
           project,
           name: $event
@@ -55,7 +58,8 @@ export default {
       'newProjectError',
       'projects',
       'currentProject',
-      'currentIdProjectSelected'
+      'currentIdProjectSelected',
+      'classRegisterHover'
     ])//,
     // ...mapState('tasks', [
     //   'disableTaskCreatingMode'

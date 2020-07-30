@@ -21,6 +21,8 @@
         :inEditingMode="task.inEditingMode"
         :editingModeDisabled="task.editingModeDisabled"
         :name="task.description"
+        :isCompletedCssTxt="task.completed"
+        :isCompletedBtnDel="task.completed"
         @onInput="setTaskDescription({
           task,
           description: $event
@@ -28,7 +30,12 @@
         @onEdit="setEditingMode(task)"
         @onSave="applyChange(task)"
         @onDelete="deleteRegister(task)"
-      />
+      >
+        <v-icon
+          @click="checkboxClicked(task)">
+          {{ task.completed ? 'check_box' : 'check_box_outline_blank' }}
+        </v-icon>
+      </EditRegister>
     </div>
   </Panel>
 </template>
@@ -82,14 +89,19 @@ export default {
       'setNewTaskName',
       'setTaskDescription',
       'setEditingMode',
-      'setTasksPanelTitle'
+      'setTasksPanelTitle',
+      'toggleCompleted'
     ]),
     ...mapActions('tasks', [
       'createTask',
       'fetchProjectTasks',
       'applyChange',
       'deleteRegister'
-    ])
+    ]),
+    checkboxClicked (task) {
+      this.toggleCompleted(task)
+      this.applyChange(task)
+    }
   }
 }
 </script>

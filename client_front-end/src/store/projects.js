@@ -11,6 +11,7 @@ export default {
     newProjectError: null,
     currentProject: null,
     currentIdProjectSelected: null,
+    classRegisterHover: true,
     currentProjectEditing: null,
     fetchProjectsError: null
   },
