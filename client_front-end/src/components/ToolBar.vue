@@ -146,7 +146,8 @@ export default {
   },
   methods: {
     ...mapMutations('projects', [
-      'setCurrentProject'
+      'setCurrentProject',
+      'setCurrentIdProjectSelected'
     ]),
     // ...mapMutations('authentication', [
     //   'setToken'
@@ -157,6 +158,7 @@ export default {
     resetData () {
       this.menu = false
       this.setCurrentProject(null)
+      this.setCurrentIdProjectSelected(null)
     },
     closeMenuAndLogout () {
       this.resetData()
