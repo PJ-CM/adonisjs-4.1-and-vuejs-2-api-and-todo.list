@@ -47,7 +47,8 @@ export default {
 // .v-btn {
 //   background-color: var(--color-btn-action) !important;
 // }
-// .v-btn:hover {
-//   background-color: var(--color-btn-action-hover) !important;
-// }
+.btn-action.mt-3.theme--dark.v-btn.v-btn--contained.v-btn--disabled.v-size--default {
+  background-color: hsla(182, 28%, 75%, 0.69) !important;
+  color: hsla(0, 0%, 100%, 0.84) !important;
+}
 </style>
