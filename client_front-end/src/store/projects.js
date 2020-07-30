@@ -9,6 +9,9 @@ export default {
     projects: [],
     newProjectName: null,
     newProjectError: null,
+    currentProject: null,
+    currentIdProjectSelected: null,
+    currentProjectEditing: null,
     fetchProjectsError: null
   },
   actions: {
@@ -59,6 +62,15 @@ export default {
     setNewProjectName (state, name) {
       state.newProjectName = name
     },
+    setCurrentProject (state, project) {
+      state.currentProject = project
+    },
+    setCurrentIdProjectSelected (state, id) {
+      state.currentIdProjectSelected = id
+    },
+    setCurrentProjectEditing (state, project) {
+      state.currentProjectEditing = project
+    },
     appendProject (state, project) {
       state.projects.push(project)
     },
@@ -72,11 +84,29 @@ export default {
       // Esto no llega a estar permitido parece ser, debido a que no es un campo del registro
       // project.inEditingMode = true
       Vue.set(project, 'inEditingMode', true)
+      state.currentProjectEditing = project
+      // commit('setCurrentProjectEditing', project)
+
+      // commit('setEditingDisabled')
+      // },
+      // setEditingDisabled ({ state }) {
+      state.projects.forEach(proj => {
+        Vue.set(proj, 'editingModeDisabled', (state.currentProjectEditing !== proj))
+      })
     },
     unsetEditingMode (state, project) {
       // Esto no llega a estar permitido parece ser, debido a que no es un campo del registro
       // project.inEditingMode = false
       Vue.set(project, 'inEditingMode', false)
+      state.currentProjectEditing = null
+      // commit('setCurrentProjectEditing', null)
+
+      // commit('unsetEditingDisabled')
+      // },
+      // unsetEditingDisabled ({ state }) {
+      state.projects.forEach(proj => {
+        Vue.set(proj, 'editingModeDisabled', false)
+      })
     },
     removeProjectFromList (state, project) {
       state.projects.splice(state.projects.indexOf(project), 1)

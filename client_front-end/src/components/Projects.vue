@@ -16,13 +16,16 @@
       class="project mx-2 mt-2 mb-2"
       v-for="project in projects" :key="project.id">
       <EditRegister
+        :currentIdRegisterClicked="currentIdProjectSelected"
         :inEditingMode="project.inEditingMode"
+        :editingModeDisabled="project.editingModeDisabled"
+        :idRegister="project.id"
         :name="project.name"
-        :theRegister="project"
         @onInput="setProjectName({
           project,
           name: $event
         })"
+        @onClick="projectClicked(project)"
         @onEdit="setEditingMode(project)"
         @onSave="applyChange(project)"
         @onDelete="deleteRegister(project)"
@@ -49,20 +52,32 @@ export default {
     ...mapState('projects', [
       'newProjectName',
       'newProjectError',
-      'projects'
+      'projects',
+      'currentProject',
+      'currentIdProjectSelected'
     ])
   },
   methods: {
+    projectClicked (project) {
+      this.setCurrentProject(project)
+      this.setCurrentIdProjectSelected(project.id)
+      this.fetchProjectTasks(project)
+    },
     ...mapMutations('projects', [
       'setNewProjectName',
       'setProjectName',
-      'setEditingMode'
+      'setEditingMode',
+      'setCurrentProject',
+      'setCurrentIdProjectSelected'
     ]),
     ...mapActions('projects', [
       'createProject',
       'fetch',
       'applyChange',
       'deleteRegister'
+    ]),
+    ...mapActions('tasks', [
+      'fetchProjectTasks'
     ])
   }
 }

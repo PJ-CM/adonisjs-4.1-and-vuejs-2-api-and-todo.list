@@ -5,9 +5,7 @@
         <Projects></Projects>
       </v-flex>
       <v-flex xs8 class="pl-4">
-        <Panel title="Tareas">
-          <h1>Contenido de Tareas del Proyecto Elegido</h1>
-        </Panel>
+        <Tasks></Tasks>
       </v-flex>
     </v-layout>
   </v-container>
@@ -16,11 +14,13 @@
 <script>
 import { mapGetters } from 'vuex'
 import Projects from '@/components/Projects.vue'
+import Tasks from '@/components/Tasks.vue'
 import router from '@/router'
 
 export default {
   components: {
-    Projects
+    Projects,
+    Tasks
   },
   computed: {
     ...mapGetters('authentication', [

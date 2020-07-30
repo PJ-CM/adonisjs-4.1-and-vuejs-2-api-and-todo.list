@@ -13,7 +13,7 @@
       {{ newProjectError }}
     </v-alert> -->
 
-    <v-flex xs4 class="text-xs-right">
+    <v-flex xs4 class="text-right">
       <v-btn
         dark
         class="mt-3"
