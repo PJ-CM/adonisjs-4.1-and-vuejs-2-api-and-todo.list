@@ -6,7 +6,7 @@ const Task = use('App/Models/Task')
 const AuthorizationService = use('App/Services/AuthorizationService')
 
 class TaskController {
-  async index ({ auth, params, response }) {
+  async index ({ auth, params }) {
     const user = await auth.getUser()
     const { id } = params
 
@@ -14,6 +14,10 @@ class TaskController {
     AuthorizationService.verifyPermission(project, user)
 
     return project.tasks().fetch()
+  }
+
+  async listAll () {
+    return await Task.all()
   }
 
   async store ({ request, auth, params }) {
@@ -48,6 +52,16 @@ class TaskController {
 
     console.log(`Se eliminó la tarea [${task.id}] del proyecto [${project.id}]:`)
     return task
+  }
+
+  async destroyAllFromParent ({ auth, params }) {
+    const user = await auth.getUser()
+    const { id } = params
+
+    const project = await Project.find(id)
+    AuthorizationService.verifyPermission(project, user)
+
+    return project.tasks().delete()
   }
 
   async update ({ auth, params, request }) {

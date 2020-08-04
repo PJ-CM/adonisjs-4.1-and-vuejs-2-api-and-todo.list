@@ -20,6 +20,10 @@ class ProjectController {
     }
   }
 
+  async listAll () {
+    return await Project.all()
+  }
+
   async store ({ request, auth }) {
     const user = await auth.getUser()
     const { name } = request.all()
@@ -47,6 +51,15 @@ class ProjectController {
 
     console.log(`Se eliminó el proyecto [${project.id}]:`, project.name)
     return project
+  }
+
+  async destroyAllFromParent ({ auth }) {
+    const user = await auth.getUser()
+
+    const project = await Project.find(id)
+    AuthorizationService.verifyPermission(project, user)
+
+    return user.projects().delete()
   }
 
   async update ({ auth, params, request }) {

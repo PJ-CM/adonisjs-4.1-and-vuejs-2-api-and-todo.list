@@ -5,13 +5,14 @@ export default {
   namespaced: true,
   state: {
     token: null,
-    userEmail: null,
+    user: null,
     registerEmail: null,
     registerPassword: null,
     registerError: null,
     loginEmail: null,
     loginPassword: null,
-    loginError: null
+    loginError: null,
+    fetchUserAuthError: null
   },
   actions: {
     resetRegister ({ commit }) {
@@ -22,7 +23,7 @@ export default {
       commit('setLoginEmail', null)
       commit('setLoginPassword', null)
     },
-    register ({ commit, state }) {
+    register ({ dispatch, commit, state }) {
       commit('setRegisterError', null)
       return HTTP().post('/users/register', {
         email: state.registerEmail,
@@ -30,16 +31,17 @@ export default {
       })
         .then(({ data }) => {
           commit('setToken', data.token)
-          commit('setUserEmail', state.registerEmail)
           commit('setRegisterEmail', null)
           commit('setRegisterPassword', null)
-          router.push('/projects')
+          dispatch('fetchUserAuth', {
+            redirectTo: '/projects'
+          })
         })
         .catch(() => {
           commit('setRegisterError', 'Ocurrió cierto ERROR al querer registrar la nueva cuenta de usuario')
         })
     },
-    login ({ commit, state }) {
+    login ({ dispatch, commit, state }) {
       commit('setLoginError', null)
       // commit('setLoginError', null)
       return HTTP().post('/users/login', {
@@ -48,10 +50,11 @@ export default {
       })
         .then(({ data }) => {
           commit('setToken', data.token)
-          commit('setUserEmail', state.loginEmail)
           commit('setLoginEmail', null)
           commit('setLoginPassword', null)
-          router.push('/projects')
+          dispatch('fetchUserAuth', {
+            redirectTo: '/projects'
+          })
         })
         .catch(() => {
           commit('setLoginError', 'Ocurrió cierto ERROR al querer iniciar sesión de usuario')
@@ -59,8 +62,18 @@ export default {
     },
     logOut ({ commit }) {
       commit('setToken', null)
-      commit('setUserEmail', null)
+      commit('setUser', null)
       router.push('/login')
+    },
+    fetchUserAuth ({ commit }, payload) {
+      return HTTP().get('/users/auth')
+        .then(({ data }) => {
+          commit('setUser', data)
+          router.push(payload.redirectTo)
+        })
+        .catch(() => {
+          commit('setFetchUserAuthError', 'Ocurrió cierto ERROR al querer recuperar los datos del usuario autenticado')
+        })
     }
   },
   getters: {
@@ -72,8 +85,8 @@ export default {
     setToken (state, token) {
       state.token = token
     },
-    setUserEmail (state, userEmail) {
-      state.userEmail = userEmail
+    setUser (state, user) {
+      state.user = user
     },
     setRegisterError (state, error) {
       state.registerError = error
@@ -92,6 +105,9 @@ export default {
     },
     setLoginPassword (state, password) {
       state.loginPassword = password
+    },
+    setFetchUserAuthError (state, error) {
+      state.fetchUserAuthError = error
     }
   }
 }

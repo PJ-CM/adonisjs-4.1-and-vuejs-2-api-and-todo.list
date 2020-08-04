@@ -12,7 +12,12 @@ export default {
     currentTaskEditing: null,
     fetchTasksError: null,
     tasksPanelTitle: null,
-    disableTaskCreatingMode: true
+    disableTaskCreatingMode: true,
+    selectedTaskTo: null,
+    modalConfirmMode: false,
+    modalTitle: '',
+    modalText: '',
+    modalBtnText: ''
   },
   actions: {
     resetTasksPanel ({ commit }) {
@@ -119,6 +124,21 @@ export default {
     },
     toggleCompleted (state, task) {
       task.completed = !task.completed
+    },
+    setSelectedTaskTo (state, task) {
+      state.selectedTaskTo = task
+    },
+    toggleModalConfirm (state, onOff) {
+      state.modalConfirmMode = onOff
+    },
+    setModalTitle (state, modalTitle) {
+      state.modalTitle = modalTitle
+    },
+    setModalText (state, modalText) {
+      state.modalText = modalText
+    },
+    setModalBtnText (state, modalBtnText) {
+      state.modalBtnText = modalBtnText
     }
   }
 }

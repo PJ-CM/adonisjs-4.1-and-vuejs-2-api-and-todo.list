@@ -27,7 +27,7 @@
 
           <v-list-item-content>
             <v-list-item-title>Usuario AUTH</v-list-item-title>
-            <v-list-item-subtitle>{{ userEmail }}</v-list-item-subtitle>
+            <v-list-item-subtitle>{{ user ? user.email : '' }}</v-list-item-subtitle>
           </v-list-item-content>
 
           <!-- <v-list-item-action>
@@ -99,7 +99,7 @@ export default {
   // ]
   computed: {
     ...mapState('authentication', [
-      'userEmail'
+      'user'
     ])
   },
   methods: {

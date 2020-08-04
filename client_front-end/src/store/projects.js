@@ -13,7 +13,8 @@ export default {
     currentIdProjectSelected: null,
     classRegisterHover: true,
     currentProjectEditing: null,
-    fetchProjectsError: null
+    fetchProjectsError: null,
+    deleteProjectTasksError: null
   },
   actions: {
     resetProjectsPanel ({ commit }) {
@@ -48,10 +49,23 @@ export default {
           commit('unsetEditingMode', project)
         })
     },
-    deleteRegister ({ commit }, project) {
-      return HTTP().delete(`projects/delete/${project.id}`)
+    deleteRegister ({ dispatch, commit }, payload) {
+      return HTTP().delete(`projects/delete/${payload.project.id}`)
         .then(() => {
-          commit('removeProjectFromList', project)
+          commit('removeProjectFromList', payload.project)
+          dispatch('resetProjectsPanel')
+          dispatch('tasks/resetTasksPanel', null, { root: true })
+        })
+    },
+    deleteProjectTasks ({ dispatch, commit }, project) {
+      return HTTP().delete(`/projects/${project.id}/tasks/delete`)
+        .then(() => {
+          dispatch('deleteRegister', {
+            project
+          })
+        })
+        .catch(() => {
+          commit('setDeleteProjectTasksError', 'Ocurrió cierto ERROR al querer eliminar la lista de tareas del proyecto elegido')
         })
     }
   },
@@ -63,6 +77,9 @@ export default {
     },
     setFetchProjectsError (state, error) {
       state.fetchProjectsError = error
+    },
+    setDeleteProjectTasksError (state, error) {
+      state.deleteProjectTasksError = error
     },
     setNewProjectName (state, name) {
       state.newProjectName = name

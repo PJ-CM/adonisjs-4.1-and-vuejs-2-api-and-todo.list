@@ -32,7 +32,7 @@
         @onClick="projectClicked(project)"
         @onEdit="setEditingMode(project)"
         @onSave="applyChange(project)"
-        @onDelete="deleteRegister(project)"
+        @onDelete="deleteProjectTasks(project)"
       />
     </div>
   </Panel>
@@ -95,7 +95,7 @@ export default {
       'createProject',
       'fetch',
       'applyChange',
-      'deleteRegister'
+      'deleteProjectTasks'
     ]),
     ...mapActions('tasks', [
       'fetchProjectTasks',

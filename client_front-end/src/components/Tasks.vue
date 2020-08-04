@@ -29,7 +29,7 @@
         })"
         @onEdit="setEditingMode(task)"
         @onSave="applyChange(task)"
-        @onDelete="deleteRegister(task)"
+        @onDelete="confirmActionOnRegister(task)"
       >
         <v-icon
           @click="checkboxClicked(task)">
@@ -37,6 +37,14 @@
         </v-icon>
       </EditRegister>
     </div>
+
+    <ModalConfirm
+      :modalConfirmMode="modalConfirmMode"
+      :modalTitle="modalTitle"
+      :modalText="modalText"
+      :modalBtnText="modalBtnText"
+      @onDeleteConfirmed="deleteConfirmed()"
+    />
   </Panel>
 </template>
 
@@ -44,6 +52,7 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import CreateRegister from '@/components/CreateRegister.vue'
 import EditRegister from '@/components/EditRegister.vue'
+import ModalConfirm from '@/components/ModalConfirm.vue'
 
 export default {
   name: 'Tasks',
@@ -54,7 +63,8 @@ export default {
   // },
   components: {
     CreateRegister,
-    EditRegister
+    EditRegister,
+    ModalConfirm
   },
   mounted () {
     // this.fetchProjectTasks()
@@ -71,7 +81,12 @@ export default {
       'newTaskName',
       'newTaskError',
       'tasksPanelTitle',
-      'tasks'
+      'tasks',
+      'modalConfirmMode',
+      'modalTitle',
+      'modalText',
+      'modalBtnText',
+      'selectedTaskTo'
     ]),
     ...mapState('projects', [
       'currentProject'
@@ -90,7 +105,12 @@ export default {
       'setTaskDescription',
       'setEditingMode',
       'setTasksPanelTitle',
-      'toggleCompleted'
+      'toggleCompleted',
+      'setSelectedTaskTo',
+      'toggleModalConfirm',
+      'setModalTitle',
+      'setModalText',
+      'setModalBtnText'
     ]),
     ...mapActions('tasks', [
       'createTask',
@@ -101,6 +121,17 @@ export default {
     checkboxClicked (task) {
       this.toggleCompleted(task)
       this.applyChange(task)
+    },
+    confirmActionOnRegister (task) {
+      this.setSelectedTaskTo(task)
+      this.setModalTitle('Confirmar Acción - Tasks')
+      this.setModalText('¿Está seguro de eliminar este registro?')
+      this.setModalBtnText('Eliminar')
+      this.toggleModalConfirm(true)
+    },
+    deleteConfirmed () {
+      this.toggleModalConfirm(false)
+      this.deleteRegister(this.selectedTaskTo)
     }
   }
 }

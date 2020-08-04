@@ -6,7 +6,12 @@ const AuthorizationService = use('App/Services/AuthorizationService')
 
 class UserController {
   async index () {
-    return User.all()
+    return await User.all()
+  }
+
+  async getAuth ({ auth }) {
+    const user = await auth.getUser()
+    return user
   }
 
   // -> Probando...
