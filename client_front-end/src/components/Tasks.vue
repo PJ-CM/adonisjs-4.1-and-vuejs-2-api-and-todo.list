@@ -37,14 +37,6 @@
         </v-icon>
       </EditRegister>
     </div>
-
-    <ModalConfirm
-      :modalConfirmMode="modalConfirmMode"
-      :modalTitle="modalTitle"
-      :modalText="modalText"
-      :modalBtnText="modalBtnText"
-      @onDeleteConfirmed="deleteConfirmed()"
-    />
   </Panel>
 </template>
 
@@ -52,7 +44,6 @@
 import { mapState, mapMutations, mapActions } from 'vuex'
 import CreateRegister from '@/components/CreateRegister.vue'
 import EditRegister from '@/components/EditRegister.vue'
-import ModalConfirm from '@/components/ModalConfirm.vue'
 
 export default {
   name: 'Tasks',
@@ -63,8 +54,7 @@ export default {
   // },
   components: {
     CreateRegister,
-    EditRegister,
-    ModalConfirm
+    EditRegister
   },
   mounted () {
     // this.fetchProjectTasks()
@@ -81,12 +71,7 @@ export default {
       'newTaskName',
       'newTaskError',
       'tasksPanelTitle',
-      'tasks',
-      'modalConfirmMode',
-      'modalTitle',
-      'modalText',
-      'modalBtnText',
-      'selectedTaskTo'
+      'tasks'
     ]),
     ...mapState('projects', [
       'currentProject'
@@ -106,17 +91,18 @@ export default {
       'setEditingMode',
       'setTasksPanelTitle',
       'toggleCompleted',
-      'setSelectedTaskTo',
-      'toggleModalConfirm',
+      'setSelectedTaskTo'
+    ]),
+    ...mapMutations('modalConfirm', [
       'setModalTitle',
       'setModalText',
-      'setModalBtnText'
+      'setModalBtnText',
+      'setModalItemType'
     ]),
     ...mapActions('tasks', [
       'createTask',
       'fetchProjectTasks',
-      'applyChange',
-      'deleteRegister'
+      'applyChange'
     ]),
     checkboxClicked (task) {
       this.toggleCompleted(task)
@@ -125,13 +111,10 @@ export default {
     confirmActionOnRegister (task) {
       this.setSelectedTaskTo(task)
       this.setModalTitle('Confirmar Acción - Tasks')
-      this.setModalText('¿Está seguro de eliminar este registro?')
+      this.setModalText('¿Está seguro de eliminar este registro de TASK?')
       this.setModalBtnText('Eliminar')
-      this.toggleModalConfirm(true)
-    },
-    deleteConfirmed () {
-      this.toggleModalConfirm(false)
-      this.deleteRegister(this.selectedTaskTo)
+      this.setModalItemType('task')
+      this.$emit('onShowModalConfirm')
     }
   }
 }

@@ -2,34 +2,85 @@
   <v-container>
     <v-layout>
       <v-flex xs4>
-        <Projects></Projects>
+        <Projects
+          @onShowModalConfirm="showModalConfirm()"
+        />
       </v-flex>
       <v-flex xs8 class="pl-4">
-        <Tasks></Tasks>
+        <Tasks
+          @onShowModalConfirm="showModalConfirm()"
+        />
       </v-flex>
     </v-layout>
+
+    <ModalConfirm
+      :modalConfirmMode="modalConfirmMode"
+      :modalTitle="modalTitle"
+      :modalText="modalText"
+      :modalBtnText="modalBtnText"
+      :modalItemType="modalItemType"
+      @onDeleteConfirmed="deleteConfirmed"
+    />
   </v-container>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import Projects from '@/components/Projects.vue'
 import Tasks from '@/components/Tasks.vue'
+import ModalConfirm from '@/components/ModalConfirm.vue'
 import router from '@/router'
 
 export default {
   components: {
     Projects,
-    Tasks
+    Tasks,
+    ModalConfirm
   },
   computed: {
     ...mapGetters('authentication', [
       'isLoggedIn'
+    ]),
+    ...mapState('projects', [
+      'selectedProjectTo'
+    ]),
+    ...mapState('tasks', [
+      'selectedTaskTo'
+    ]),
+    ...mapState('modalConfirm', [
+      'modalConfirmMode',
+      'modalTitle',
+      'modalText',
+      'modalBtnText',
+      'modalItemType'
     ])
   },
   mounted () {
     if (!this.isLoggedIn) {
       return router.push('/login')
+    }
+  },
+  methods: {
+    ...mapMutations('modalConfirm', [
+      'toggleModalConfirm'
+    ]),
+    ...mapActions('projects', [
+      'deleteProjectTasks'
+    ]),
+    ...mapActions('tasks', [
+      'deleteTask'
+    ]),
+    showModalConfirm () {
+      this.toggleModalConfirm(true)
+      console.log('Se debería activar el ModalConfirm')
+    },
+    deleteConfirmed (itemType) {
+      this.toggleModalConfirm(false)
+      if (itemType === 'task') {
+        this.deleteTask(this.selectedTaskTo)
+      } else if (itemType === 'project') {
+        this.deleteProjectTasks(this.selectedProjectTo)
+      }
     }
   }
 }

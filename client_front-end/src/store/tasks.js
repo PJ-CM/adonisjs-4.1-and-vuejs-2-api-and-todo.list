@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-// import router from '../router'
 import HTTP from '../http'
 
 export default {
@@ -13,11 +12,7 @@ export default {
     fetchTasksError: null,
     tasksPanelTitle: null,
     disableTaskCreatingMode: true,
-    selectedTaskTo: null,
-    modalConfirmMode: false,
-    modalTitle: '',
-    modalText: '',
-    modalBtnText: ''
+    selectedTaskTo: null
   },
   actions: {
     resetTasksPanel ({ commit }) {
@@ -62,7 +57,7 @@ export default {
           commit('unsetEditingMode', task)
         })
     },
-    deleteRegister ({ commit }, task) {
+    deleteTask ({ commit }, task) {
       return HTTP().delete(`tasks/delete/${task.id}`)
         .then(() => {
           commit('removeTaskFromList', task)
@@ -127,18 +122,6 @@ export default {
     },
     setSelectedTaskTo (state, task) {
       state.selectedTaskTo = task
-    },
-    toggleModalConfirm (state, onOff) {
-      state.modalConfirmMode = onOff
-    },
-    setModalTitle (state, modalTitle) {
-      state.modalTitle = modalTitle
-    },
-    setModalText (state, modalText) {
-      state.modalText = modalText
-    },
-    setModalBtnText (state, modalBtnText) {
-      state.modalBtnText = modalBtnText
     }
   }
 }

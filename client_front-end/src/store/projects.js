@@ -1,6 +1,5 @@
 import Vue from 'vue'
 
-// import router from '../router'
 import HTTP from '../http'
 
 export default {
@@ -14,7 +13,8 @@ export default {
     classRegisterHover: true,
     currentProjectEditing: null,
     fetchProjectsError: null,
-    deleteProjectTasksError: null
+    deleteProjectTasksError: null,
+    selectedProjectTo: null
   },
   actions: {
     resetProjectsPanel ({ commit }) {
@@ -49,7 +49,7 @@ export default {
           commit('unsetEditingMode', project)
         })
     },
-    deleteRegister ({ dispatch, commit }, payload) {
+    deleteProject ({ dispatch, commit }, payload) {
       return HTTP().delete(`projects/delete/${payload.project.id}`)
         .then(() => {
           commit('removeProjectFromList', payload.project)
@@ -60,7 +60,7 @@ export default {
     deleteProjectTasks ({ dispatch, commit }, project) {
       return HTTP().delete(`/projects/${project.id}/tasks/delete`)
         .then(() => {
-          dispatch('deleteRegister', {
+          dispatch('deleteProject', {
             project
           })
         })
@@ -132,6 +132,9 @@ export default {
     },
     removeProjectFromList (state, project) {
       state.projects.splice(state.projects.indexOf(project), 1)
+    },
+    setSelectedProjectTo (state, project) {
+      state.selectedProjectTo = project
     }
   }
 }

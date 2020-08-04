@@ -32,14 +32,14 @@
         @onClick="projectClicked(project)"
         @onEdit="setEditingMode(project)"
         @onSave="applyChange(project)"
-        @onDelete="deleteProjectTasks(project)"
+        @onDelete="confirmActionOnRegister(project)"
       />
     </div>
   </Panel>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import CreateRegister from '@/components/CreateRegister.vue'
 import EditRegister from '@/components/EditRegister.vue'
 
@@ -50,9 +50,14 @@ export default {
     EditRegister
   },
   mounted () {
-    this.fetch()
+    if (this.isLoggedIn) {
+      this.fetch()
+    }
   },
   computed: {
+    ...mapGetters('authentication', [
+      'isLoggedIn'
+    ]),
     ...mapState('projects', [
       'newProjectName',
       'newProjectError',
@@ -86,21 +91,35 @@ export default {
       'setProjectName',
       'setEditingMode',
       'setCurrentProject',
-      'setCurrentIdProjectSelected'
+      'setCurrentIdProjectSelected',
+      'setSelectedProjectTo'
     ]),
     ...mapMutations('tasks', [
       'setDisableTaskCreatingMode'
     ]),
+    ...mapMutations('modalConfirm', [
+      'setModalTitle',
+      'setModalText',
+      'setModalBtnText',
+      'setModalItemType'
+    ]),
     ...mapActions('projects', [
       'createProject',
       'fetch',
-      'applyChange',
-      'deleteProjectTasks'
+      'applyChange'
     ]),
     ...mapActions('tasks', [
       'fetchProjectTasks',
       'resetTasksPanel'
-    ])
+    ]),
+    confirmActionOnRegister (project) {
+      this.setSelectedProjectTo(project)
+      this.setModalTitle('Confirmar Acción - Projects')
+      this.setModalText('¿Está seguro de eliminar este registro de PROJECT?')
+      this.setModalBtnText('Eliminar')
+      this.setModalItemType('project')
+      this.$emit('onShowModalConfirm')
+    }
   }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="modalConfirmMode" persistent max-width="290">
+    <v-dialog v-model="modalConfirmMode" persistent max-width="300">
       <!-- <template v-slot:activator="{ on, attrs }">
         <v-btn
           color="primary"
@@ -17,7 +17,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="black darken-1" text @click="toggleModalConfirm(false)">Cancelar</v-btn>
-          <v-btn color="red darken-1" text @click="$emit('onDeleteConfirmed')">{{ modalBtnText }}</v-btn>
+          <v-btn color="red darken-1" text @click="$emit('onDeleteConfirmed', modalItemType)">{{ modalBtnText }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -34,11 +34,12 @@ export default {
     'modalConfirmMode',
     'modalTitle',
     'modalText',
-    'modalBtnText'
+    'modalBtnText',
+    'modalItemType'
   ],
 
   methods: {
-    ...mapMutations('tasks', [
+    ...mapMutations('modalConfirm', [
       'toggleModalConfirm'
     ])
   }
