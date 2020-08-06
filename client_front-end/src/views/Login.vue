@@ -6,15 +6,15 @@
 
         <v-text-field
           label="Email"
-          placeholder="Email"
+          placeholder="Especifica el Email del Registro"
           :value="loginEmail"
           @input="setLoginEmail"
           @keyup.enter="login"
         ></v-text-field>
           <!-- v-model="form.email" -->
         <v-text-field
-          label="Password"
-          placeholder="Password"
+          label="Contraseña"
+          placeholder="Teclea tu Contraseña"
           type="password"
           :value="loginPassword"
           @input="setLoginPassword"

@@ -14,15 +14,15 @@
         <v-icon>playlist_add_check</v-icon>
         Proyectos
       </v-btn>
+      <v-btn to="/about">
+        <v-icon>ondemand_video</v-icon>
+        Como se Hizo
+      </v-btn>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>
 
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-btn>
-        <v-icon>ondemand_video</v-icon>
-        Como se Hizo
-      </v-btn>
       <v-btn to="/register" v-if="!isLoggedIn">
         <v-icon>account_box</v-icon>
         Registrarse

@@ -6,14 +6,14 @@
 
         <v-text-field
           label="Email"
-          placeholder="Email"
+          placeholder="Indica tu Dirección de Correo"
           :value="registerEmail"
           @input="setRegisterEmail"
           @keyup.enter="register"
         ></v-text-field>
         <v-text-field
-          label="Password"
-          placeholder="Password"
+          label="Contraseña"
+          placeholder="Teclea una Contraseña"
           type="password"
           :value="registerPassword"
           @input="setRegisterPassword"

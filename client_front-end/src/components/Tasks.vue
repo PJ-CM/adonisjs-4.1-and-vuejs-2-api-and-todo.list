@@ -4,14 +4,14 @@
       :disableRegisterCreatingMode="disableTaskCreatingMode"
       placeholder="Nombre de la nueva tarea..."
       :value="newTaskName"
-      @onInput="setNewTaskName"
+      @on-input="setNewTaskName"
       @create="createTask"
     />
 
     <div
       class="mx-1"
       v-if="tasks.length == 0">
-      :: Ninguna tarea creada por el momento ::
+      :: Ninguna tarea a listar por el momento ::
     </div>
     <div
       class="task mx-2 mt-2 mb-2"
@@ -23,13 +23,13 @@
         :name="task.description"
         :isCompletedCssTxt="task.completed"
         :isCompletedBtnDel="task.completed"
-        @onInput="setTaskDescription({
+        @on-input="setTaskDescription({
           task,
           description: $event
         })"
-        @onEdit="setEditingMode(task)"
-        @onSave="applyChange(task)"
-        @onDelete="confirmActionOnRegister(task)"
+        @on-edit="setEditingMode(task)"
+        @on-save="applyChange(task)"
+        @on-delete="confirmActionOnRegister(task)"
       >
         <v-icon
           @click="checkboxClicked(task)">
@@ -114,7 +114,7 @@ export default {
       this.setModalText('¿Está seguro de eliminar este registro de TASK?')
       this.setModalBtnText('Eliminar')
       this.setModalItemType('task')
-      this.$emit('onShowModalConfirm')
+      this.$emit('on-show-modal-confirm')
     }
   }
 }

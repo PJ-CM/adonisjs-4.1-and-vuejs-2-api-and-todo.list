@@ -8,7 +8,7 @@
           'reg_selected': (currentIdRegisterClicked === idRegister),
           'reg_text_struck_through': isCompletedCssTxt
         }"
-        @click="$emit('onClick')"
+        @click="$emit('on-click')"
         :title="(currentIdRegisterClicked === idRegister) ? 'Clic para deseleccionarlo' : 'Clic para elegirlo'"
         v-if="!inEditingMode">
         {{ name }}
@@ -17,8 +17,8 @@
         autofocus
         v-if="inEditingMode"
         :value="name"
-        @keyup.enter="$emit('onSave')"
-        @input="$emit('onInput', $event)"
+        @keyup.enter="$emit('on-save')"
+        @input="$emit('on-input', $event)"
       ></v-text-field>
     </v-flex>
 
@@ -26,14 +26,14 @@
       <v-icon
         class="icon-action"
         v-if="!inEditingMode"
-        @click="$emit('onEdit')" title="Editar" :disabled="editingModeDisabled">edit</v-icon>
+        @click="$emit('on-edit')" title="Editar" :disabled="editingModeDisabled">edit</v-icon>
       <v-icon
         class="icon-action"
         v-if="inEditingMode"
-        @click="$emit('onSave')" title="Validar">check</v-icon>
+        @click="$emit('on-save')" title="Validar">check</v-icon>
       <v-icon
         class="icon-action"
-        @click="$emit('onDelete')" title="Eliminar" :disabled="!isCompletedBtnDel">delete</v-icon>
+        @click="$emit('on-delete')" title="Eliminar" :disabled="!isCompletedBtnDel">delete</v-icon>
     </v-flex>
   </v-layout>
 </template>

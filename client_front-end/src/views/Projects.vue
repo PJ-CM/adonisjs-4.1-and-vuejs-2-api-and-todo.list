@@ -3,12 +3,12 @@
     <v-layout>
       <v-flex xs4>
         <Projects
-          @onShowModalConfirm="showModalConfirm()"
+          @on-show-modal-confirm="showModalConfirm()"
         />
       </v-flex>
       <v-flex xs8 class="pl-4">
         <Tasks
-          @onShowModalConfirm="showModalConfirm()"
+          @on-show-modal-confirm="showModalConfirm()"
         />
       </v-flex>
     </v-layout>
@@ -19,7 +19,7 @@
       :modalText="modalText"
       :modalBtnText="modalBtnText"
       :modalItemType="modalItemType"
-      @onDeleteConfirmed="deleteConfirmed"
+      @on-delete-confirmed="deleteConfirmed"
     />
   </v-container>
 </template>

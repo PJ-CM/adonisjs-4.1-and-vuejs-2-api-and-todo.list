@@ -4,7 +4,7 @@
       :disableRegisterCreatingMode="false"
       placeholder="Nombre del nuevo proyecto..."
       :value="newProjectName"
-      @onInput="setNewProjectName"
+      @on-input="setNewProjectName"
       @create="createProject"
     />
 
@@ -25,14 +25,14 @@
         :name="project.name"
         :isCompletedCssTxt="false"
         :isCompletedBtnDel="true"
-        @onInput="setProjectName({
+        @on-input="setProjectName({
           project,
           name: $event
         })"
-        @onClick="projectClicked(project)"
-        @onEdit="setEditingMode(project)"
-        @onSave="applyChange(project)"
-        @onDelete="confirmActionOnRegister(project)"
+        @on-click="projectClicked(project)"
+        @on-edit="setEditingMode(project)"
+        @on-save="applyChange(project)"
+        @on-delete="confirmActionOnRegister(project)"
       />
     </div>
   </Panel>
@@ -118,7 +118,7 @@ export default {
       this.setModalText('¿Está seguro de eliminar este registro de PROJECT?')
       this.setModalBtnText('Eliminar')
       this.setModalItemType('project')
-      this.$emit('onShowModalConfirm')
+      this.$emit('on-show-modal-confirm')
     }
   }
 }

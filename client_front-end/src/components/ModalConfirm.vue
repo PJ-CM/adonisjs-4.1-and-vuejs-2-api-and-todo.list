@@ -17,7 +17,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="black darken-1" text @click="toggleModalConfirm(false)">Cancelar</v-btn>
-          <v-btn color="red darken-1" text @click="$emit('onDeleteConfirmed', modalItemType)">{{ modalBtnText }}</v-btn>
+          <v-btn color="red darken-1" text @click="$emit('on-delete-confirmed', modalItemType)">{{ modalBtnText }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

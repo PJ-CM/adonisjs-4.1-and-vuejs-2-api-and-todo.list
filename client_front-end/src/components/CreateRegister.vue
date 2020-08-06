@@ -4,7 +4,7 @@
       <v-text-field
         :placeholder="placeholder"
         :value="value"
-        @input="$emit('onInput', $event)"
+        @input="$emit('on-input', $event)"
         @keyup.enter="$emit('create')"
         :disabled="disableRegisterCreatingMode"
       ></v-text-field>
