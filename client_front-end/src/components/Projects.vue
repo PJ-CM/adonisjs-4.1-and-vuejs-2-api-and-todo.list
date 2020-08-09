@@ -8,6 +8,13 @@
       @create="createProject"
     />
 
+    <v-alert class="alert-errors-section" type="error" :value="headerProjectError !== null">
+      {{ headerProjectError }}
+      <ul>
+        <li v-for="(projectError, index) in projectErrors" :key="index">{{ projectError.message }}</li>
+      </ul>
+    </v-alert>
+
     <div
       class="mx-1"
       v-if="projects.length == 0">
@@ -60,7 +67,8 @@ export default {
     ]),
     ...mapState('projects', [
       'newProjectName',
-      'newProjectError',
+      'headerProjectError',
+      'projectErrors',
       'projects',
       'currentProject',
       'currentIdProjectSelected',

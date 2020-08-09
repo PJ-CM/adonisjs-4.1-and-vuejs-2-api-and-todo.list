@@ -8,6 +8,13 @@
       @create="createTask"
     />
 
+    <v-alert class="alert-errors-gnral" type="error" :value="headerTaskError !== null">
+      {{ headerTaskError }}
+      <ul>
+        <li v-for="(taskError, index) in taskErrors" :key="index">{{ taskError.message }}</li>
+      </ul>
+    </v-alert>
+
     <div
       class="mx-1"
       v-if="tasks.length == 0">
@@ -69,7 +76,8 @@ export default {
     ...mapState('tasks', [
       'disableTaskCreatingMode',
       'newTaskName',
-      'newTaskError',
+      'headerTaskError',
+      'taskErrors',
       'tasksPanelTitle',
       'tasks'
     ]),

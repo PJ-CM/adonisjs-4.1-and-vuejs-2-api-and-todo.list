@@ -20,9 +20,21 @@
           @keyup.enter="register"
           autocomplete="false"
         ></v-text-field>
+        <v-text-field
+          label="Comfirmar Contraseña"
+          placeholder="Comfirmar la Contraseña Tecleada"
+          type="password"
+          :value="registerPasswordConfirmation"
+          @input="setRegisterPasswordConfirmation"
+          @keyup.enter="register"
+          autocomplete="false"
+        ></v-text-field>
 
-        <v-alert type="error" :value="registerError">
-          {{ registerError }}
+        <v-alert class="alert-errors-gnral" type="error" :value="headerAuthError !== null">
+          {{ headerAuthError }}
+          <ul>
+            <li v-for="(authError, index) in authErrors" :key="index">{{ authError.message }}</li>
+          </ul>
         </v-alert>
 
         <v-btn class="btn-action" dark @click="register">
@@ -42,13 +54,16 @@ export default {
     ...mapState('authentication', [
       'registerEmail',
       'registerPassword',
-      'registerError'
+      'registerPasswordConfirmation',
+      'headerAuthError',
+      'authErrors'
     ])
   },
   methods: {
     ...mapMutations('authentication', [
       'setRegisterEmail',
-      'setRegisterPassword'
+      'setRegisterPassword',
+      'setRegisterPasswordConfirmation'
     ]),
     ...mapActions('authentication', [
       'register'

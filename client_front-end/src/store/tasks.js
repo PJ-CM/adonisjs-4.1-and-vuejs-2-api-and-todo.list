@@ -7,7 +7,8 @@ export default {
   state: {
     tasks: [],
     newTaskName: null,
-    newTaskError: null,
+    headerTaskError: null,
+    taskErrors: [],
     currentTaskEditing: null,
     fetchTasksError: null,
     tasksPanelTitle: null,
@@ -15,6 +16,10 @@ export default {
     selectedTaskTo: null
   },
   actions: {
+    resetTaskErrors ({ commit }) {
+      commit('setHeaderTaskError', null)
+      commit('setTaskErrors', [])
+    },
     resetTasksPanel ({ commit }) {
       commit('setTasks', [])
       commit('setTasksPanelTitle', 'Tareas')
@@ -37,8 +42,8 @@ export default {
           dispatch('resetTasksPanel')
         })
     },
-    createTask ({ commit, state, rootState }) {
-      commit('setNewTaskError', null)
+    createTask ({ dispatch, commit, state, rootState }) {
+      dispatch('resetTaskErrors')
       // return HTTP().post(`/projects/${project.id}/tasks/store`, {
       return HTTP().post(`/projects/${rootState.projects.currentProject.id}/tasks/store`, {
         description: state.newTaskName
@@ -47,14 +52,20 @@ export default {
           commit('appendTask', data)
           commit('setNewTaskName', null)
         })
-        .catch(() => {
-          commit('setNewTaskError', 'Ocurrió cierto ERROR al querer crear la nueva tarea')
+        .catch((error) => {
+          commit('setHeaderTaskError', 'Ocurrió cierto ERROR al querer crear la nueva tarea')
+          commit('setTaskErrors', error.response.data.error)
         })
     },
-    applyChange ({ commit }, task) {
+    applyChange ({ dispatch, commit }, task) {
+      dispatch('resetTaskErrors')
       return HTTP().patch(`tasks/update/${task.id}`, task)
         .then(() => {
           commit('unsetEditingMode', task)
+        })
+        .catch((error) => {
+          commit('setHeaderTaskError', 'Ocurrió cierto ERROR al querer modificar la tarea')
+          commit('setTaskErrors', error.response.data.error)
         })
     },
     deleteTask ({ commit }, task) {
@@ -67,8 +78,11 @@ export default {
   getters: {
   },
   mutations: {
-    setNewTaskError (state, error) {
-      state.newTaskError = error
+    setHeaderTaskError (state, headerTaskError) {
+      state.headerTaskError = headerTaskError
+    },
+    setTaskErrors (state, taskErrors) {
+      state.taskErrors = taskErrors
     },
     setFetchTasksError (state, error) {
       state.fetchTasksError = error

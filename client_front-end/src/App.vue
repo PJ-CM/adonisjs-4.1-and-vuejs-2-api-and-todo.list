@@ -71,4 +71,15 @@ export default {
 .icon-action:hover {
   color: var(--color-btn-action-hover);
 }
+
+.alert-errors-gnral ul, .alert-errors-section ul {
+  width: 75%;
+  margin: 10px auto 0;
+}
+.alert-errors-gnral ul li, .alert-errors-section ul li {
+  text-align: justify;
+}
+.alert-errors-section {
+  font-size: .7rem;
+}
 </style>

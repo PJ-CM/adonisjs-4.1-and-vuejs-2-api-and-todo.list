@@ -32,8 +32,10 @@ const Route = use('Route')
 
 Route.group(() => {
   Route.post('register', 'UserController.store')
+    .validator(['Register'])
   // Route.post('register-and-authenticate', 'UserController.storeAndLogin')
   Route.post('login', 'UserController.login')
+    .validator(['Login'])
 
   Route.get('', 'UserController.index').middleware('auth')
   Route.get('auth', 'UserController.getAuth').middleware('auth')
@@ -46,12 +48,15 @@ Route.group(() => {
   Route.get('', 'ProjectController.index')
   Route.get('list-all', 'ProjectController.listAll')
   Route.post('store', 'ProjectController.store')
+    .validator(['ProjectStore'])
   Route.delete('delete/:id', 'ProjectController.destroy')
   Route.delete('delete-all-from', 'ProjectController.destroyAllFromParent')
   Route.patch('update/:id', 'ProjectController.update')
+    .validator(['ProjectUpdate'])
 
   Route.get(':id/tasks', 'TaskController.index')
   Route.post(':id/tasks/store', 'TaskController.store')
+    .validator(['TaskStore'])
   Route.delete(':id/tasks/delete', 'TaskController.destroyAllFromParent')
 }).prefix('api/projects/')
   .middleware('auth')
@@ -60,4 +65,5 @@ Route.group(() => {
   Route.get('list-all', 'TaskController.listAll')
   Route.delete('delete/:id', 'TaskController.destroy')
   Route.patch('update/:id', 'TaskController.update')
+    .validator(['TaskUpdate'])
 }).prefix('api/tasks/').middleware('auth')

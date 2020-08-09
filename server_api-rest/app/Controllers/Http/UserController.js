@@ -51,7 +51,7 @@ class UserController {
 
   // -> CON Autenticación Automática...
   async store ({ request }) {
-    const { email, password } = request.all()
+    const { email, password, password_confirmation } = request.all()
 
     console.log(email, password)
 
@@ -69,11 +69,42 @@ class UserController {
     return this.login(...arguments)
   }
 
-  async login ({ request, auth }) {
+  // Sin Validación, ni devolviendo USER
+  // -----------------------------------------------------------
+  // async login ({ request, auth }) {
+  //   const { email, password } = request.all()
+
+  //   const token = await auth.attempt(email, password)
+  //   return token
+  // }
+
+  // CON Validación y devolviendo USER
+  // -----------------------------------------------------------
+  async login ({ request, auth, response }) {
     const { email, password } = request.all()
 
-    const token = await auth.attempt(email, password)
-    return token
+    try {
+      const token = await auth.attempt(email, password)
+      const user = await User.findBy('email', email)
+      return { token, user }
+
+    } catch (error) {
+      // if (error.code === 'E_USER_NOT_FOUND') {
+      //   // return response.status(401).send('Cannot find user with provided email')
+      //   return response.status(401).send({ error: [ { 'message': 'Cannot find user with provided email' } ] })
+      // }
+
+      // else if (error.code === 'E_PASSWORD_MISMATCH') {
+      //   // return response.status(401).send('Invalid user password')
+      //   return response.status(401).send({ error: [ { 'message': 'Invalid user password' } ] })
+      // }
+
+      // else {
+      //   throw new Error()
+      // }
+
+      AuthorizationService.verifyAuthData(response, error)
+    }
   }
 
   async destroy ({ auth, params }) {

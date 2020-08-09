@@ -7,7 +7,8 @@ export default {
   state: {
     projects: [],
     newProjectName: null,
-    newProjectError: null,
+    headerProjectError: null,
+    projectErrors: [],
     currentProject: null,
     currentIdProjectSelected: null,
     classRegisterHover: true,
@@ -17,6 +18,10 @@ export default {
     selectedProjectTo: null
   },
   actions: {
+    resetProjectErrors ({ commit }) {
+      commit('setHeaderProjectError', null)
+      commit('setProjectErrors', [])
+    },
     resetProjectsPanel ({ commit }) {
       commit('setCurrentProject', null)
       commit('setCurrentIdProjectSelected', null)
@@ -30,8 +35,8 @@ export default {
           commit('setFetchProjectsError', 'Ocurrió cierto ERROR al querer recuperar la lista de proyectos del usuario')
         })
     },
-    createProject ({ commit, state }) {
-      commit('setNewProjectError', null)
+    createProject ({ dispatch, commit, state }) {
+      dispatch('resetProjectErrors')
       return HTTP().post('/projects/store', {
         name: state.newProjectName
       })
@@ -39,14 +44,20 @@ export default {
           commit('appendProject', data)
           commit('setNewProjectName', null)
         })
-        .catch(() => {
-          commit('setNewProjectError', 'Ocurrió cierto ERROR al querer crear el nuevo proyecto')
+        .catch((error) => {
+          commit('setHeaderProjectError', 'Ocurrió cierto ERROR al querer crear el nuevo proyecto')
+          commit('setProjectErrors', error.response.data.error)
         })
     },
-    applyChange ({ commit }, project) {
+    applyChange ({ dispatch, commit }, project) {
+      dispatch('resetProjectErrors')
       return HTTP().patch(`projects/update/${project.id}`, project)
         .then(() => {
           commit('unsetEditingMode', project)
+        })
+        .catch((error) => {
+          commit('setHeaderProjectError', 'Ocurrió cierto ERROR al querer modificar el proyecto')
+          commit('setProjectErrors', error.response.data.error)
         })
     },
     deleteProject ({ dispatch, commit }, payload) {
@@ -72,8 +83,11 @@ export default {
   getters: {
   },
   mutations: {
-    setNewProjectError (state, error) {
-      state.newProjectError = error
+    setHeaderProjectError (state, headerProjectError) {
+      state.headerProjectError = headerProjectError
+    },
+    setProjectErrors (state, projectErrors) {
+      state.projectErrors = projectErrors
     },
     setFetchProjectsError (state, error) {
       state.fetchProjectsError = error

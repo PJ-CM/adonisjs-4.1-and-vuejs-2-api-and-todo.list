@@ -23,8 +23,13 @@
         ></v-text-field>
           <!-- v-model="form.password" -->
 
-        <v-alert type="error" :value="loginError">
-          {{ loginError }}
+        <v-alert class="alert-errors-gnral" type="error" :value="headerAuthError !== null">
+          {{ headerAuthError }}
+          <ul>
+            <li v-for="(authError, index) in authErrors" :key="index">{{ authError.message }}</li>
+            <!-- <li>{{ authErrors }}</li>
+            <li>{{ authErrors.error }}</li> -->
+          </ul>
         </v-alert>
 
         <v-btn class="btn-action" dark @click="login">
@@ -57,7 +62,8 @@ export default {
     ...mapState('authentication', [
       'loginEmail',
       'loginPassword',
-      'loginError'
+      'headerAuthError',
+      'authErrors'
     ])
   },
   methods: {
