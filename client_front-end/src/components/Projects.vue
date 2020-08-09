@@ -79,11 +79,14 @@ export default {
     // ])
   },
   methods: {
-    isPprojectClicked (project) {
+    isProjectClicked (project) {
       return this.currentProject === project
     },
     projectClicked (project) {
-      if (this.isPprojectClicked(project)) {
+      this.resetProjectErrors()
+      this.resetTaskErrors()
+
+      if (this.isProjectClicked(project)) {
         this.setCurrentProject(null)
         this.setCurrentIdProjectSelected(null)
         this.resetTasksPanel()
@@ -112,11 +115,13 @@ export default {
       'setModalItemType'
     ]),
     ...mapActions('projects', [
+      'resetProjectErrors',
       'createProject',
       'fetch',
       'applyChange'
     ]),
     ...mapActions('tasks', [
+      'resetTaskErrors',
       'fetchProjectTasks',
       'resetTasksPanel'
     ]),
