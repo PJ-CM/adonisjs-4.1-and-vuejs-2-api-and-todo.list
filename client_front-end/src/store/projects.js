@@ -43,6 +43,12 @@ export default {
         .then(({ data }) => {
           commit('appendProject', data)
           commit('setNewProjectName', null)
+
+          // -> Activar el Project recién creado y su Panel de Tasks
+          commit('setCurrentProject', data)
+          commit('setCurrentIdProjectSelected', data.id)
+          dispatch('tasks/fetchProjectTasks', data, { root: true })
+          commit('tasks/setDisableTaskCreatingMode', null, { root: true })
         })
         .catch((error) => {
           commit('setHeaderProjectError', 'Ocurrió cierto ERROR al querer crear el nuevo proyecto')
