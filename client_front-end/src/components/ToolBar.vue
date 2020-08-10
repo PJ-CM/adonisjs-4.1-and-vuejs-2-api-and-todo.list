@@ -82,6 +82,7 @@ export default {
   background-color: var(--color-prim) !important;
   position: fixed;
   width: 100%;
+  z-index: 999;
 
   .v-toolbar__title {
     margin-right: 1rem;

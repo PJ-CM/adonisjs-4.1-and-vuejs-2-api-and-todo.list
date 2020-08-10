@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <v-container>
     <h1>Como se Hizo</h1>
 
     <p>
@@ -10,7 +10,7 @@
       Por otro lado, el desarrollo planteado en su origen fue ampliado para añadir otras funcionalidades extra.<br>
       Toda esta parte adicional se podrá encontrar en este <a href="https://github.com/PJ-CM/adonisjs-4.1-and-vuejs-2-api-and-todo.list" title="Ir al repositorio" target="_blank">repositorio</a>.
     </p>
-  </div>
+  </v-container>
 </template>
 
 <style lang="scss" scoped>

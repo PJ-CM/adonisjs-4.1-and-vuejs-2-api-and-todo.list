@@ -4,31 +4,33 @@
       <v-flex xs6 offset-xs3>
         <h1>Registro</h1>
 
-        <v-text-field
-          label="Email"
-          placeholder="Indica tu Dirección de Correo"
-          :value="registerEmail"
-          @input="setRegisterEmail"
-          @keyup.enter="register"
-        ></v-text-field>
-        <v-text-field
-          label="Contraseña"
-          placeholder="Teclea una Contraseña"
-          type="password"
-          :value="registerPassword"
-          @input="setRegisterPassword"
-          @keyup.enter="register"
-          autocomplete="false"
-        ></v-text-field>
-        <v-text-field
-          label="Comfirmar Contraseña"
-          placeholder="Comfirmar la Contraseña Tecleada"
-          type="password"
-          :value="registerPasswordConfirmation"
-          @input="setRegisterPasswordConfirmation"
-          @keyup.enter="register"
-          autocomplete="false"
-        ></v-text-field>
+        <div class="mt-10">
+          <v-text-field
+            label="Email"
+            placeholder="Indica tu Dirección de Correo"
+            :value="registerEmail"
+            @input="setRegisterEmail"
+            @keyup.enter="register"
+          ></v-text-field>
+          <v-text-field
+            label="Contraseña"
+            placeholder="Teclea una Contraseña"
+            type="password"
+            :value="registerPassword"
+            @input="setRegisterPassword"
+            @keyup.enter="register"
+            autocomplete="false"
+          ></v-text-field>
+          <v-text-field
+            label="Comfirmar Contraseña"
+            placeholder="Comfirmar la Contraseña Tecleada"
+            type="password"
+            :value="registerPasswordConfirmation"
+            @input="setRegisterPasswordConfirmation"
+            @keyup.enter="register"
+            autocomplete="false"
+          ></v-text-field>
+        </div>
 
         <v-alert class="alert-errors-gnral" type="error" :value="headerAuthError !== null">
           {{ headerAuthError }}
@@ -37,10 +39,12 @@
           </ul>
         </v-alert>
 
-        <v-btn class="btn-action" dark @click="register">
-          <v-icon>account_box</v-icon>
-          Registrarse
-        </v-btn>
+        <div class="mt-10">
+          <v-btn class="btn-action" dark @click="register">
+            <v-icon>account_box</v-icon>
+            Registrarse
+          </v-btn>
+        </div>
       </v-flex>
     </v-layout>
   </v-container>

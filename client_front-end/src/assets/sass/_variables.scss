@@ -3,10 +3,11 @@
 
 :root {
     --color-prim: cadetblue;
-    --color-sec: #262626;
+    --color-sec: rgb(124, 206, 209);
+    --color-black: #262626;
 
     --color-btn-action: rgb(166, 218, 219);
-    --color-btn-action-hover: rgb(124, 206, 209);
+    --color-btn-action-hover: var(--color-sec);
 
     --color-reg_selected: rgb(255, 252, 74);
 }

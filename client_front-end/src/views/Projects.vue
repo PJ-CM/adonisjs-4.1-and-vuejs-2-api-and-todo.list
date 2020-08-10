@@ -2,12 +2,12 @@
   <v-container>
     <v-layout>
       <v-flex xs4>
-        <Projects
+        <ProjectsPanel
           @on-show-modal-confirm="showModalConfirm()"
         />
       </v-flex>
       <v-flex xs8 class="pl-4">
-        <Tasks
+        <TasksPanel
           @on-show-modal-confirm="showModalConfirm()"
         />
       </v-flex>
@@ -26,15 +26,15 @@
 
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-import Projects from '@/components/Projects.vue'
-import Tasks from '@/components/Tasks.vue'
+import ProjectsPanel from '@/components/ProjectsPanel.vue'
+import TasksPanel from '@/components/TasksPanel.vue'
 import ModalConfirm from '@/components/ModalConfirm.vue'
 import router from '@/router'
 
 export default {
   components: {
-    Projects,
-    Tasks,
+    ProjectsPanel,
+    TasksPanel,
     ModalConfirm
   },
   computed: {

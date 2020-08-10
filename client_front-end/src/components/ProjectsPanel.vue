@@ -51,7 +51,7 @@ import CreateRegister from '@/components/CreateRegister.vue'
 import EditRegister from '@/components/EditRegister.vue'
 
 export default {
-  name: 'Projects',
+  name: 'ProjectsPanel',
   components: {
     CreateRegister,
     EditRegister

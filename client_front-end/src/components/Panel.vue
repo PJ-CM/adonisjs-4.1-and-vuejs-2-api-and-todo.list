@@ -28,6 +28,6 @@ export default {
 //En vez de establecer el BG-Color con las propiedades CSS del Vuetify...
 .v-toolbar {
   // background-color: cadetblue !important;
-  background-color: var(--color-prim) !important;
+  background-color: var(--color-sec) !important;
 }
 </style>
