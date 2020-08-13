@@ -26,10 +26,12 @@ export default {
       commit('setCurrentProject', null)
       commit('setCurrentIdProjectSelected', null)
     },
-    fetch ({ commit }) {
+    fetch ({ dispatch, commit }) {
       return HTTP().get('/projects')
         .then(({ data }) => {
           commit('setProjects', data)
+
+          dispatch('tasks/fetchUserTasks', null, { root: true })
         })
         .catch(() => {
           commit('setFetchProjectsError', 'Ocurrió cierto ERROR al querer recuperar la lista de proyectos del usuario')
@@ -70,16 +72,19 @@ export default {
       return HTTP().delete(`projects/delete/${payload.project.id}`)
         .then(() => {
           commit('removeProjectFromList', payload.project)
+          commit('setSelectedProjectTo', null)
           dispatch('resetProjectsPanel')
           dispatch('tasks/resetTasksPanel', null, { root: true })
         })
     },
-    deleteProjectTasks ({ dispatch, commit }, project) {
+    deleteProjectTasks ({ dispatch, commit }, { project, haveToDelete }) {
       return HTTP().delete(`/projects/${project.id}/tasks/delete`)
         .then(() => {
-          dispatch('deleteProject', {
-            project
-          })
+          if (haveToDelete) {
+            dispatch('deleteProject', {
+              project
+            })
+          }
         })
         .catch(() => {
           commit('setDeleteProjectTasksError', 'Ocurrió cierto ERROR al querer eliminar la lista de tareas del proyecto elegido')

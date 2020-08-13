@@ -4,6 +4,8 @@ const Project = use('App/Models/Project')
 
 const AuthorizationService = use('App/Services/AuthorizationService')
 
+const Config = use('Config')
+
 class ProjectController {
   async index ({ auth, response }) {
     try {
@@ -56,9 +58,6 @@ class ProjectController {
   async destroyAllFromParent ({ auth }) {
     const user = await auth.getUser()
 
-    const project = await Project.find(id)
-    AuthorizationService.verifyPermission(project, user)
-
     return user.projects().delete()
   }
 
@@ -74,6 +73,12 @@ class ProjectController {
 
     console.log(`Se actualizó el proyecto [${project.id}]:`, project.name)
     return project
+  }
+
+  async changeOwnerToGenericUser({ auth }) {
+    const user = await auth.getUser()
+
+    return user.projects().update({ user_id: Config.get('app.appGenericUser') })
   }
 }
 

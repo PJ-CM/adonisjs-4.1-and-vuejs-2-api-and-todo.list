@@ -40,8 +40,15 @@ Route.group(() => {
   Route.get('', 'UserController.index').middleware('auth')
   Route.get('auth', 'UserController.getAuth').middleware('auth')
   Route.delete('delete/:id', 'UserController.destroy').middleware('auth')
+  Route.patch('update/:id', 'UserController.update').middleware('auth')
+    .validator(['UserDataUpdate'])
+  Route.patch('update-passw/:id', 'UserController.updatePassw').middleware('auth')
+    .validator(['UserPasswUpdate'])
 
-  Route.delete(':id/projects/delete', 'ProjectController.destroyAllFromParentId')
+  Route.patch('projects/change-owner', 'ProjectController.changeOwnerToGenericUser').middleware('auth')
+
+  Route.delete('projects/delete', 'ProjectController.destroyAllFromParent').middleware('auth')
+  Route.delete('tasks/delete', 'TaskController.destroyAllFromGrandParent').middleware('auth')
 }).prefix('api/users/')
 
 Route.group(() => {
@@ -50,7 +57,7 @@ Route.group(() => {
   Route.post('store', 'ProjectController.store')
     .validator(['ProjectStore'])
   Route.delete('delete/:id', 'ProjectController.destroy')
-  Route.delete('delete-all-from', 'ProjectController.destroyAllFromParent')
+  // Route.delete('delete-all-from', 'ProjectController.destroyAllFromParent')
   Route.patch('update/:id', 'ProjectController.update')
     .validator(['ProjectUpdate'])
 
@@ -63,6 +70,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('list-all', 'TaskController.listAll')
+  Route.get('list-auth', 'TaskController.listAuth')
   Route.delete('delete/:id', 'TaskController.destroy')
   Route.patch('update/:id', 'TaskController.update')
     .validator(['TaskUpdate'])

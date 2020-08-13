@@ -111,7 +111,8 @@ export default {
     ...mapMutations('modalConfirm', [
       'setModalTitle',
       'setModalText',
-      'setModalBtnText',
+      'setModalPrimBtnTxt',
+      'setModalPrimEvent',
       'setModalItemType'
     ]),
     ...mapActions('projects', [
@@ -128,8 +129,9 @@ export default {
     confirmActionOnRegister (project) {
       this.setSelectedProjectTo(project)
       this.setModalTitle('Confirmar Acción - Projects')
-      this.setModalText('¿Está seguro de eliminar este registro de PROJECT?')
-      this.setModalBtnText('Eliminar')
+      this.setModalText('¿Está seguro de eliminar este Registro de PROYECTO y todas sus Tareas?')
+      this.setModalPrimBtnTxt('Eliminar')
+      this.setModalPrimEvent('on-full-delete-confirmed')
       this.setModalItemType('project')
       this.$emit('on-show-modal-confirm')
     }

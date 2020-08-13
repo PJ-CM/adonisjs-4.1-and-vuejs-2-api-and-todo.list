@@ -38,6 +38,11 @@ class User extends Model {
   projects () {
     return this.hasMany('App/Models/Project')
   }
+
+  // Relación para poder sacar listado de las Tasks de los Projects del User AUTH
+  tasks () {
+    return this.manyThrough('App/Models/Project', 'tasks')
+  }
 }
 
 module.exports = User

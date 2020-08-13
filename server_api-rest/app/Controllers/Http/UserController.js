@@ -107,6 +107,39 @@ class UserController {
     }
   }
 
+  async update ({ auth, params, request }) {
+    const user = await auth.getUser()
+    const { id } = params
+
+    // Controlando desde un servicio o helper
+    // ----------------------------------------------------
+    const messageError = ':: No tiene permitido modificar esta cuenta ::'
+    AuthorizationService.verifyIfAllow(Number(id), user, messageError)
+
+    user.merge(request.only('username', 'email'))
+    await user.save()
+
+    console.log(`Se actualizó el usuario [${user.id}]:`, user.username)
+    return user
+  }
+
+  async updatePassw ({ auth, params, request }) {
+    const user = await auth.getUser()
+    const { id } = params
+    const { password, password_confirmation } = request.all()
+
+    // Controlando desde un servicio o helper
+    // ----------------------------------------------------
+    const messageError = ':: No tiene permitido modificar la contraseña de esta cuenta ::'
+    AuthorizationService.verifyIfAllow(Number(id), user, messageError)
+
+    user.merge(request.only('password'))
+    await user.save()
+
+    console.log(`Se actualizó el usuario [${user.id}]:`, user.username)
+    return user
+  }
+
   async destroy ({ auth, params }) {
     const user = await auth.getUser()
     const { id } = params

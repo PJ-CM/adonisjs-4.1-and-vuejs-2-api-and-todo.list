@@ -104,7 +104,8 @@ export default {
     ...mapMutations('modalConfirm', [
       'setModalTitle',
       'setModalText',
-      'setModalBtnText',
+      'setModalPrimBtnTxt',
+      'setModalPrimEvent',
       'setModalItemType'
     ]),
     ...mapActions('tasks', [
@@ -119,8 +120,9 @@ export default {
     confirmActionOnRegister (task) {
       this.setSelectedTaskTo(task)
       this.setModalTitle('Confirmar Acción - Tasks')
-      this.setModalText('¿Está seguro de eliminar este registro de TASK?')
-      this.setModalBtnText('Eliminar')
+      this.setModalText('¿Está seguro de eliminar este Registro de TAREA?')
+      this.setModalPrimBtnTxt('Eliminar')
+      this.setModalPrimEvent('on-full-delete-confirmed')
       this.setModalItemType('task')
       this.$emit('on-show-modal-confirm')
     }

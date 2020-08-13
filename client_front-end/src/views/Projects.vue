@@ -15,11 +15,17 @@
 
     <ModalConfirm
       :modalConfirmMode="modalConfirmMode"
+      :modalMaxWidth="modalMaxWidth"
+      :modalTitleBgClass="modalTitleBgClass"
       :modalTitle="modalTitle"
+      :modalSubTitle="modalSubTitle"
       :modalText="modalText"
-      :modalBtnText="modalBtnText"
+      :modalPrimBtnTxt="modalPrimBtnTxt"
+      :modalSecBtnTxt="modalSecBtnTxt"
+      :modalPrimEvent="modalPrimEvent"
+      :modalSecEvent="modalSecEvent"
       :modalItemType="modalItemType"
-      @on-delete-confirmed="deleteConfirmed"
+      @on-full-delete-confirmed="fullDeleteConfirmed"
     />
   </v-container>
 </template>
@@ -49,9 +55,15 @@ export default {
     ]),
     ...mapState('modalConfirm', [
       'modalConfirmMode',
+      'modalMaxWidth',
+      'modalTitleBgClass',
       'modalTitle',
+      'modalSubTitle',
       'modalText',
-      'modalBtnText',
+      'modalPrimBtnTxt',
+      'modalSecBtnTxt',
+      'modalPrimEvent',
+      'modalSecEvent',
       'modalItemType'
     ])
   },
@@ -70,16 +82,21 @@ export default {
     ...mapActions('tasks', [
       'deleteTask'
     ]),
+    ...mapActions('modalConfirm', [
+      'resetModalConfirm'
+    ]),
     showModalConfirm () {
       this.toggleModalConfirm(true)
-      console.log('Se debería activar el ModalConfirm')
+      // console.log('Se debería activar el ModalConfirm')
     },
-    deleteConfirmed (itemType) {
+    fullDeleteConfirmed (itemType) {
       this.toggleModalConfirm(false)
+      this.resetModalConfirm()
+
       if (itemType === 'task') {
         this.deleteTask(this.selectedTaskTo)
       } else if (itemType === 'project') {
-        this.deleteProjectTasks(this.selectedProjectTo)
+        this.deleteProjectTasks({ project: this.selectedProjectTo, haveToDelete: true })
       }
     }
   }

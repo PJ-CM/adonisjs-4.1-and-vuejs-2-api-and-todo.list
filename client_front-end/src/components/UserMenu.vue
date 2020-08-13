@@ -26,8 +26,10 @@
           </v-list-item-avatar>
 
           <v-list-item-content>
-            <v-list-item-title>Usuario AUTH</v-list-item-title>
-            <v-list-item-subtitle>{{ user ? user.email : '' }}</v-list-item-subtitle>
+            <v-list-item-title>
+              <a @click="goToProfile" title="Acceder al Perfil de Usuario">Usuario AUTH</a>
+            </v-list-item-title>
+            <v-list-item-subtitle>@{{ user ? user.username : '' }}</v-list-item-subtitle>
           </v-list-item-content>
 
           <!-- <v-list-item-action>
@@ -44,7 +46,7 @@
 
       <v-divider></v-divider>
 
-      <v-btn class="btn-action my-5" text dark @click="closeMenuAndLogout">
+      <v-btn class="btn-action my-5" text dark @click="applyFullLogout">
         <v-icon>exit_to_app</v-icon>
         Cerrar Sesión
       </v-btn>
@@ -79,6 +81,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import router from '@/router'
 
 export default {
   name: 'UserMenu',
@@ -112,14 +115,31 @@ export default {
     ...mapActions('authentication', [
       'logOut'
     ]),
-    resetData () {
+    closeUserMenu () {
       this.menu = false
+    },
+    resetData () {
       this.resetProjectsPanel()
       this.resetTasksPanel()
     },
-    closeMenuAndLogout () {
+    applyFullLogout () {
+      this.closeUserMenu()
       this.resetData()
       this.logOut()
+    },
+    goToProfile () {
+      // this.closeUserMenu()
+      // return router.push('/profile')
+      // -------------------------------------------------------------------------------------------------------------------
+      // Error presentado en CONSOLA si se intenta navegar al "/profile" estando ya en esa ruta:
+      //    [Vue warn]: Error in v-on handler (Promise/async): "Error: Avoided redundant navigation to current location: "/profile"."
+      // -> Para evitar eso, primero, se verifica que la ruta a la que ir no es la actual y, solamente, si es diferente,
+      // se navegará hacia ella.
+      // -------------------------------------------------------------------------------------------------------------------
+      this.closeUserMenu()
+      const path = '/profile'
+      // if (this.$route.path !== path) this.$router.push(path)
+      if (this.$route.path !== path) return router.push(path)
     }
   }
 }

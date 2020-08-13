@@ -6,6 +6,7 @@ import authentication from './authentication'
 import projects from './projects'
 import tasks from './tasks'
 import modalConfirm from './modalConfirm'
+import profile from './profile'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ export default new Vuex.Store({
     authentication,
     projects,
     tasks,
-    modalConfirm
+    modalConfirm,
+    profile
   }// ,
   // plugins: [
   //   createPersistedState()

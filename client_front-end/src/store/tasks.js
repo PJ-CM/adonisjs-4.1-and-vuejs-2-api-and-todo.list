@@ -6,6 +6,7 @@ export default {
   namespaced: true,
   state: {
     tasks: [],
+    tasksAuth: [],
     newTaskName: null,
     headerTaskError: null,
     taskErrors: [],
@@ -22,6 +23,7 @@ export default {
     },
     resetTasksPanel ({ commit }) {
       commit('setTasks', [])
+      commit('setTasksAuth', [])
       commit('setTasksPanelTitle', 'Tareas')
       commit('setDisableTaskCreatingMode', true)
     },
@@ -42,6 +44,16 @@ export default {
           dispatch('resetTasksPanel')
         })
     },
+    fetchUserTasks ({ commit }) {
+      return HTTP().get('/tasks/list-auth')
+        .then(({ data }) => {
+          commit('setTasksAuth', data)
+        })
+        .catch((error) => {
+          commit('setHeaderTaskError', 'Ocurrió cierto ERROR al querer recuperar la lista de tareas del usuario autenticado')
+          commit('setTaskErrors', error.response.data.error)
+        })
+    },
     createTask ({ dispatch, commit, state, rootState }) {
       dispatch('resetTaskErrors')
       // return HTTP().post(`/projects/${project.id}/tasks/store`, {
@@ -51,6 +63,7 @@ export default {
         .then(({ data }) => {
           commit('appendTask', data)
           commit('setNewTaskName', null)
+          dispatch('fetchUserTasks')
         })
         .catch((error) => {
           commit('setHeaderTaskError', 'Ocurrió cierto ERROR al querer crear la nueva tarea')
@@ -68,10 +81,12 @@ export default {
           commit('setTaskErrors', error.response.data.error)
         })
     },
-    deleteTask ({ commit }, task) {
+    deleteTask ({ dispatch, commit }, task) {
       return HTTP().delete(`tasks/delete/${task.id}`)
         .then(() => {
           commit('removeTaskFromList', task)
+          commit('setSelectedTaskTo', null)
+          dispatch('fetchUserTasks')
         })
     }
   },
@@ -101,6 +116,9 @@ export default {
     },
     setTasks (state, tasks) {
       state.tasks = tasks
+    },
+    setTasksAuth (state, tasksAuth) {
+      state.tasksAuth = tasksAuth
     },
     setTaskDescription (state, { task, description }) {
       task.description = description

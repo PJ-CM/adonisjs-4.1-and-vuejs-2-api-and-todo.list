@@ -20,6 +20,12 @@ class TaskController {
     return await Task.all()
   }
 
+  async listAuth ({ auth }) {
+    const user = await auth.getUser()
+
+    return await user.tasks().fetch()
+  }
+
   async store ({ request, auth, params }) {
     const user = await auth.getUser()
     const { description } = request.all()
@@ -62,6 +68,12 @@ class TaskController {
     AuthorizationService.verifyPermission(project, user)
 
     return project.tasks().delete()
+  }
+
+  async destroyAllFromGrandParent ({ auth }) {
+    const user = await auth.getUser()
+
+    return user.tasks().delete()
   }
 
   async update ({ auth, params, request }) {
